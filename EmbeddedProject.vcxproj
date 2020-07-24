@@ -45,14 +45,16 @@
     <ClCompile>
       <CLanguageStandard>
       </CLanguageStandard>
-      <AdditionalIncludeDirectories>Core;Config;Drivers/BSP;Drivers/BSP/Components;Drivers/CMSIS/Core/Include;Drivers/CMSIS/Device/ST/STM32F7xx/Include;Drivers/STM32F7xx_HAL_Driver/Inc;Drivers/STM32F7xx_HAL_Driver/Inc/Legacy;FATFS/App;GUI/Config;Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc;Middlewares/ST/STM32_USB_Device_Library/Core/Inc;Middlewares/Third_Party/emWin/inc;Middlewares/Third_Party/FatFs/src;Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;Middlewares/Third_Party/FreeRTOS/Source/include;Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1;USB_DEVICE/App;Utilities/CPU;GUI/Core;Utilities/Fonts;SystemView/Config;SystemView/OS;SystemView/SEGGER;EventRecorder;Modules;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>USE_HAL_DRIVER;STM32F767xx;_RTE_;ARM_MATH_CM7;ARM_MATH_MATRIX_CHECK;ARM_MATH_ROUNDING;__FPU_PRESENT=1;__FPU_USED=1;NDEBUG=1;RELEASE=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Core;Config;Drivers/BSP;Drivers/BSP/Components;Drivers/CMSIS/Core/Include;Drivers/CMSIS/Device/ST/STM32F7xx/Include;Drivers/STM32F7xx_HAL_Driver/Inc;Drivers/STM32F7xx_HAL_Driver/Inc/Legacy;FATFS/App;GUI/Config;Middlewares/ST/STM32_USB_Device_Library/Class/MSC/Inc;Middlewares/ST/STM32_USB_Device_Library/Core/Inc;Middlewares/Third_Party/emWin/inc;Middlewares/Third_Party/FatFs/src;Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;Middlewares/Third_Party/FreeRTOS/Source/include;Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1;USB_DEVICE/App;Utilities/CPU;GUI/Core;Utilities/Fonts;SystemView/Config;SystemView/OS;SystemView/SEGGER;EventRecorder;Modules;RTT;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USE_HAL_DRIVER;STM32F767xx;_RTE_;ARM_MATH_CM7;ARM_MATH_MATRIX_CHECK;ARM_MATH_ROUNDING;__FPU_PRESENT=1;__FPU_USED=1;NDEBUG=1;RELEASE=1;DEBUG=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <CPPLanguageStandard>
       </CPPLanguageStandard>
+      <AdditionalOptions />
     </ClCompile>
     <Link>
-      <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
+      <AdditionalLinkerInputs>%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
       <LinkerScript />
+      <AdditionalOptions />
     </Link>
     <KeilSettingsContainer>
       <KeilCPUType>Cortex-M7.fp.dp</KeilCPUType>
