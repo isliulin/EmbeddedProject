@@ -1,0 +1,406 @@
+/**
+  ******************************************************************************
+  * @file
+  * @author
+  * @version
+  * @date
+  * @brief
+  *
+  ******************************************************************************
+  * @attention
+  *
+  *
+  *
+  ******************************************************************************
+  */
+
+#include "include.h"
+
+
+float g_fImax = 0;
+float g_fImin = 0;
+//float g_faCurrent[SAVE_LEN] = {0};
+
+IntData_U uIntData;
+
+
+/*******************************************************
+  * @brief  :
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @return :
+*******************************************************/
+void vGpsMsgReceiveCallback(TimerHandle_t tTimer)
+{
+    GPIO_PinState eIrqPinSta;
+    uint8_t ucaGpsFifo[GPS_FIFO_LEN] = {0};
+    uint32_t ulLen = 0;
+    uint8_t ucSta;
+
+    xSemaphoreTake(xGpsMsgReadableSemaphore_Handle, portMAX_DELAY);//HAL_GPIO_EXTI_Callback里pps中断释放
+
+    eIrqPinSta = HAL_GPIO_ReadPin(FPGA_IRQ_GPIO_PORT, FPGA_IRQ_PIN);
+    //if(GPIO_PIN_SET == eIrqPinSta)//
+    {
+        for(uint8_t ucCount = 0; ucCount < 5; ucCount++)//总共20个数据
+        {            
+            ucSta = fpgaReadByte(FPGA_INT_STATUS_REG) & GPS_MSG_READABLE;  
+            if(ucSta == GPS_MSG_READABLE)//GPS信息准备就绪 0x03[1] == 1
+            {
+                for(uint8_t i = 0; i < 4; i++)//每4个FPGA会产生一次中断有效标志
+                {
+                    ucaGpsFifo[ulLen] = fpgaReadByte(FPGA_GPS_FIFO_REG);
+                    ++ulLen;
+                }
+            }
+        }
+
+        if(ucaGpsFifo[0] == 'A')//GPS信号有效
+        {
+            ptGPSMsg->ucGPSStatus = ucaGpsFifo[0];
+
+            ptGPSMsg->tUtc.ucHour = ucaGpsFifo[1];    //时
+            ptGPSMsg->tUtc.ucHour = (ptGPSMsg->tUtc.ucHour >> 4) * 10 + (ptGPSMsg->tUtc.ucHour & 0x0F) + 8;
+
+            ptGPSMsg->tUtc.ucMinute = ucaGpsFifo[2];    //分
+            ptGPSMsg->tUtc.ucMinute = (ptGPSMsg->tUtc.ucMinute >> 4) * 10 + (ptGPSMsg->tUtc.ucMinute & 0x0F);
+
+            ptGPSMsg->tUtc.ucSecond = ucaGpsFifo[3];    //秒
+            ptGPSMsg->tUtc.ucSecond = (ptGPSMsg->tUtc.ucSecond >> 4) * 10 + (ptGPSMsg->tUtc.ucSecond & 0x0F);
+
+            ptGPSMsg->tUtc.ucYear = ucaGpsFifo[4];    //年
+            ptGPSMsg->tUtc.ucYear = (ptGPSMsg->tUtc.ucYear >> 4) * 10 + (ptGPSMsg->tUtc.ucYear & 0x0F);
+
+            ptGPSMsg->tUtc.ucMonth = ucaGpsFifo[5];    //月
+            ptGPSMsg->tUtc.ucMonth = (ptGPSMsg->tUtc.ucMonth >> 4) * 10 + (ptGPSMsg->tUtc.ucMonth & 0x0F);
+
+            ptGPSMsg->tUtc.ucDate = ucaGpsFifo[6];    //日
+            ptGPSMsg->tUtc.ucDate = (ptGPSMsg->tUtc.ucDate >> 4) * 10 + (ptGPSMsg->tUtc.ucDate & 0x0F);
+
+            ptGPSMsg->ucSorN_Latitude = ucaGpsFifo[7];    //北纬/南纬,N:北纬;S:南纬
+
+            uint8_t ucLatitudeByte1 = ucaGpsFifo[8];
+            ucLatitudeByte1 = (ucLatitudeByte1 >> 4) * 10 + (ucLatitudeByte1 & 0x0F);
+            uint8_t ucLatitudeByte2 = ucaGpsFifo[9];
+            ucLatitudeByte2 = (ucLatitudeByte2 >> 4) * 10 + (ucLatitudeByte2 & 0x0F);
+            uint8_t ucLatitudeByte3 = ucaGpsFifo[10];
+            ucLatitudeByte3 = (ucLatitudeByte3 >> 4) * 10 + (ucLatitudeByte3 & 0x0F);
+            uint8_t ucLatitudeByte4 = ucaGpsFifo[11];
+            ucLatitudeByte4 = (ucLatitudeByte4 >> 4) * 10 + (ucLatitudeByte4 & 0x0F);
+            uint32_t ulTempLatitude = ucLatitudeByte1 * 1000000;
+            ulTempLatitude = ulTempLatitude + ucLatitudeByte2 * 10000;
+            ulTempLatitude = ulTempLatitude + ucLatitudeByte3 * 100;
+            ulTempLatitude = ulTempLatitude + ucLatitudeByte4;
+            ptGPSMsg->ulLatitude = ulTempLatitude;//纬度，这里扩大为ddmmmmmm，实际是ddmm.mmmm
+
+            ptGPSMsg->ucEorW_Longitude = ucaGpsFifo[12];    //东经/西经,E:东经;W:西经
+
+            uint8_t ucLongitudeByte1 = ucaGpsFifo[13];
+            ucLongitudeByte1 = (ucLongitudeByte1 >> 4) * 10 + (ucLongitudeByte1 & 0x0F);
+            uint8_t ucLongitudeByte2 = ucaGpsFifo[14];
+            ucLongitudeByte2 = (ucLongitudeByte2 >> 4) * 10 + (ucLongitudeByte2 & 0x0F);
+            uint8_t ucLongitudeByte3 = ucaGpsFifo[15];
+            ucLongitudeByte3 = (ucLongitudeByte3 >> 4) * 10 + (ucLongitudeByte3 & 0x0F);
+            uint8_t ucLongitudeByte4 = ucaGpsFifo[16];
+            ucLongitudeByte4 = (ucLongitudeByte4 >> 4) * 10 + (ucLongitudeByte4 & 0x0F);
+            uint8_t ucLongitudeByte5 = ucaGpsFifo[17];
+            ucLongitudeByte5 = (ucLongitudeByte5 >> 4) * 10 + (ucLongitudeByte5 & 0x0F);
+            uint32_t ulTempLongitude = ucLongitudeByte1 * 100000000;
+            ulTempLongitude = ulTempLongitude + ucLongitudeByte2 * 1000000;
+            ulTempLongitude = ulTempLongitude + ucLongitudeByte3 * 10000;
+            ulTempLongitude = ulTempLongitude + ucLongitudeByte4 * 100;
+            ulTempLongitude = ulTempLongitude + ucLongitudeByte5;
+            ptGPSMsg->ulLongitude = ulTempLongitude;//经度，这里扩大为dddmmmmmm，实际是dddmm.mmmm
+
+            xSemaphoreGive(xSyncStartSemaphore_Handle);//TdipSyncStart里获取
+        }
+    }
+}
+
+/*******************************************************
+  * @brief  :同步启动
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @return :
+*******************************************************/
+void SyncStart(uint8_t ucWorkMode)
+{
+    xSemaphoreTake(xSyncStartSemaphore_Handle, portMAX_DELAY);//vGpsMsgReceiveCallback释放
+
+    g_ucWorkStatus = ucWorkMode;
+
+    tStartTime.ucHours = ptGPSMsg->tUtc.ucHour;
+    tStartTime.ucMinutes = ptGPSMsg->tUtc.ucMinute;
+    tStartTime.ucSeconds = ptGPSMsg->tUtc.ucSecond + 1;//下一秒就是真正的启动时刻 
+
+    fpgaWriteByte(FPGA_SEND_CTRL_REG, SEND_START_CTRL);    //发射开始
+    fpgaWriteByte(FPGA_SAMPLE_CMD_REG, SAMPLE_ENABLE);     //采样使能
+
+    if(g_ucFirstSyncStart == 1)
+    {
+        g_ucFirstSyncStart = 0;
+
+        //数据接收任务
+        xTaskCreate((TaskFunction_t)vAdDataReceiveTask,
+            (const char *)"AdDataReceiveTask",
+                    (uint16_t)1024,
+                    (void *)NULL,
+                    (UBaseType_t)9,
+                    (TaskHandle_t *)& xAdDataReceiveTask_Handle);
+
+/*        //存储数据任务
+        xTaskCreate((TaskFunction_t)vSaveDataTask,
+            (const char *)"SaveDataTask",
+                    (uint16_t)1024,
+                    (void *)NULL,
+                    (UBaseType_t)10,
+                    (TaskHandle_t *)& xSaveDateTask_Handle);*/
+    }
+  
+/*    vTaskSuspend(xAdDataReceiveTask_Handle); //挂起vAdDataReceiveTask
+    vTaskSuspend(xSaveDateTask_Handle);      //挂起vSaveDataTask
+
+    vTaskResume(xAdDataReceiveTask_Handle); //恢复vAdDataReceiveTask
+    vTaskResume(xSaveDateTask_Handle);      //恢复vSaveDataTask*/
+}
+
+/*******************************************************
+  * @brief  :同步停止
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @return :
+*******************************************************/
+void SyncStop(void)
+{
+    fpgaWriteByte(FPGA_SEND_CTRL_REG, SEND_STOP_CTRL);     //发射停止
+    fpgaWriteByte(FPGA_SAMPLE_CMD_REG, SAMPLE_DISABLE);    //采样禁止
+
+    //while((fpgaReadByte(FPGA_INT_STATUS_REG) & AD_DATA_READABLE) == AD_DATA_READABLE);//等待AD缓冲区的数据被读完
+
+    fpgaWriteByte(FPGA_INT_CTRL_REG, AD_INT_DISABLE);    //AD中断禁止   
+    
+    //挂起任务    
+    //vTaskSuspend(xAdDataReceiveTask_Handle); //挂起vAdDataReceiveTask
+    //vTaskSuspend(xSaveDateTask_Handle);      //挂起vSaveDataTask
+}
+
+/*******************************************************
+  * @brief  :数据接收任务
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @return :
+*******************************************************/
+void vAdDataReceiveTask(void *pvParameters)
+{
+    int iCurrentCount = 0;
+    int iAdFifoCount = 0;
+    uint32_t ulLen = 0;
+    GPIO_PinState eIrqPinSta;
+    uint8_t ucSta;    
+    static uint16_t s_usCount = 0;
+    
+    for(;;)
+    {
+        EventStartA(0);// 
+        
+        uint8_t ucaAdFifo[AD_FIFO_LEN] = {0};
+        //float faCurrent[AD_FIFO_LEN / 3] = {0};
+        float fCurrent;
+
+        iAdFifoCount = 0;        
+
+        eIrqPinSta = HAL_GPIO_ReadPin(FPGA_IRQ_GPIO_PORT, FPGA_IRQ_PIN);
+        //if(GPIO_PIN_SET == eIrqPinSta)//
+        {
+            ucSta = fpgaReadByte(FPGA_INT_STATUS_REG);
+            ucSta = ucSta & AD_DATA_READABLE;
+            if(ucSta == AD_DATA_READABLE)//AD数据准备就绪
+            {
+                for(ulLen = 0; ulLen < AD_FIFO_LEN; ulLen++)//一次性读取AD_FIFO_LEN(96)个字节
+                {
+                    ucaAdFifo[ulLen] = fpgaReadByte(FPGA_AD_FIFO_REG);
+                }
+
+                //AD原始数据转换为电流数据
+                for(iCurrentCount = 0; iCurrentCount < (AD_FIFO_LEN / 3); iCurrentCount++)
+                {
+                    while(iAdFifoCount < AD_FIFO_LEN)
+                    {
+                        uIntData.tBytes.ucHighByte = ucaAdFifo[iAdFifoCount];
+                        uIntData.tBytes.ucMidByte  = ucaAdFifo[iAdFifoCount + 1];
+                        uIntData.tBytes.ucLowByte  = ucaAdFifo[iAdFifoCount + 2];
+
+                        if((ucaAdFifo[iAdFifoCount] & 0x80) == 0x80)
+                        {
+                            uIntData.tBytes.ucSignByte = 0xFF;
+                        }
+                        else
+                        {
+                            uIntData.tBytes.ucSignByte = 0x00;
+                        }
+                        iAdFifoCount = iAdFifoCount + 3;
+                        break;
+                    }
+                    fCurrent = dataProcess(uIntData.iResult);
+                    tWriteToSD.faContent[s_usCount] = fCurrent;
+
+                    s_usCount++;
+
+                    if(s_usCount == SAVE_LEN)//SAVE_LEN个数存一次
+                    {          
+                        xQueueSend(xWriteToSDQueue_Handle, tWriteToSD.faContent, 500); //vWriteToSDTask里获取
+                        //xQueueSend(xWriteToSDQueue_Handle, tWriteToSD.caContent, 500); //vWriteToSDTask里获取
+                        //dataSave(tWriteToSD.faContent, SAVE_LEN);
+                        s_usCount = 0;
+                        memset(tWriteToSD.faContent, 0, SAVE_LEN); // 清零                       
+                    }
+                }             
+            } // if(ucSta == AD_DATA_READABLE)//AD数据准备就绪
+        }
+
+        vTaskDelay(pdMS_TO_TICKS(50));
+        EventStopA(0);
+    }
+}
+
+/*******************************************************
+  * @brief  :数据处理
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @return :
+*******************************************************/
+float dataProcess(int32_t iOriginData)
+{ 
+    g_fCurrent = iOriginData * KAD;//得到电流值
+    g_fCurrent = g_fCurrent / 2;//默认增益2倍
+
+    #ifdef DEBUG_TARGET
+    SEGGER_RTT_SetTerminal(2);
+    SEGGER_RTT_printf(0, "I = %d\r\n", g_fCurrent);//不支持浮点数
+    App_Printf("I = %f\r\n", g_fCurrent);
+    #endif
+
+    return g_fCurrent;
+/*
+    if(fIvalue > g_fImax)
+    {
+        g_fImax = fIvalue;
+    }
+    if(fIvalue < g_fImin)
+    {
+        g_fImin = fIvalue;
+    }
+    g_fCurrent = (float)(g_fImax - g_fImin) / 2;*/
+}
+
+/** 
+ * @brief : 
+ * @note  :
+ * @param : 
+ * @param : 
+ * @param : 
+ * @return:
+ */
+void dataSave(float *pfSrc, uint16_t usLen)
+{
+    for(int i = 0; i < usLen; i++)
+    {
+        tWriteToSD.faContent[i] = pfSrc[i];
+    }
+    xQueueSend(xWriteToSDQueue_Handle, tWriteToSD.faContent, 500); //vWriteToSDTask里获取
+}*/
+
+/*******************************************************
+  * @brief  :存储数据任务
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @return :
+*******************************************************/
+void vSaveDataTask(void *pvParameters)
+{
+    char caBuf[48] = {0};
+
+    for(;;)
+    {
+        //ulTaskNotifyTake(pdTRUE, portMAX_DELAY); //等待任务通知，在Usart1_DMA_Rx_Data函数释放
+
+        if(g_ucWorkStatus == TDIP_MODE)
+        {
+            //存储格式：电流+时间(时间格式:19/07/05 12:00:00)
+            sprintf(caBuf, "%.3f %d/%d/%d %d:%d:%d\r\n", g_fCurrent, ptGPSMsg->tUtc.ucYear, ptGPSMsg->tUtc.ucMonth, ptGPSMsg->tUtc.ucDate, ptGPSMsg->tUtc.ucHour, ptGPSMsg->tUtc.ucMinute, ptGPSMsg->tUtc.ucSecond);
+            strcpy(tWriteToSD.caContent, caBuf);    //内容
+            xQueueSend(xWriteToSDQueue_Handle, tWriteToSD.caContent, 300); //vWriteToSDTask里获取
+
+            vTaskDelay(pdMS_TO_TICKS(g_ucPowerPeriod * 1000));
+        }
+        else if((g_ucWorkStatus == FDIP_SINGLE_FREQUENCY) || (g_ucWorkStatus == FDIP_DOUBLE_FREQUENCY))
+        {
+            //存储格式：频组序号+电流+时间(时间格式:19/07/05 12:00:00)
+            sprintf(caBuf, "%d %.3f %d/%d/%d %d:%d:%d\r\n", g_ucFrequencyGroupIndex, g_fCurrent, ptGPSMsg->tUtc.ucYear, ptGPSMsg->tUtc.ucMonth, ptGPSMsg->tUtc.ucDate, ptGPSMsg->tUtc.ucHour, ptGPSMsg->tUtc.ucMinute, ptGPSMsg->tUtc.ucSecond);
+            strcpy(tWriteToSD.caContent, caBuf);    //内容
+            xQueueSend(xWriteToSDQueue_Handle, tWriteToSD.caContent, 300); //vWriteToSDTask里获取
+
+            vTaskDelay(pdMS_TO_TICKS((1 / g_fLowFrequency) * 1000));
+        }        
+    }
+}
+
+/*******************************************************
+    @brief  :冒泡排序并丢弃前ulDiscardFontNum个和后ulDiscardRearNum个数据
+    @note   :从小到大排列
+    @param  :*iSrc源数据指针，*iDest目标数据指针，丢弃前discard_font个和后discard_rear个数据后的数据指针
+    @param  :total:数据总个数
+    @param  :ulDiscardFont：前面要丢弃的数据个数,ulDiscardRear后面要丢弃的数据个数
+    @return :
+*******************************************************/
+uint8_t dataBubbleSortFilter(int32_t *piSrc, int32_t *piDest, uint32_t ulTotal, uint32_t ulDiscardFontNum, uint32_t ulDiscardRearNum)
+{
+    uint32_t i, j;
+    int32_t iTmp;
+
+    if((ulDiscardFontNum + ulDiscardRearNum) > ulTotal)
+    {
+        return FALSE;
+    }
+
+    //冒泡排序，小到大排列
+    for(j = ulTotal; j > 0; j--)
+    {
+        for(i = 0; i < j; i++)
+        {
+            if(piSrc[j] < piSrc[i])
+            {
+                iTmp = piSrc[j];
+                piSrc[j] = piSrc[i];
+                piSrc[i] = iTmp;
+            }
+        }
+    }
+
+    //获得a数组中第ulDiscardFontNum个到第ulTotal - ulDiscardRearNum个数，储存到dest当中
+    for(i = ulDiscardFontNum; i < ulTotal - ulDiscardRearNum; i++)
+    {
+        piDest[i - ulDiscardFontNum] = piSrc[i];
+    }
+
+    return TRUE;
+}
+
+
+
+
+
+
+//----------------------------------------------------------------------------------

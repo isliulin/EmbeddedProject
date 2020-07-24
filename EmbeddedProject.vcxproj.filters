@@ -1,0 +1,1849 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{3cf29731-6ae3-4d53-980d-5381909381d7}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{0dd8144c-aec6-46c0-91a9-93e79e951e68}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{38422f09-83c8-44cd-9479-34fd101cadd7}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Source files\Device-specific files">
+      <UniqueIdentifier>{eda608fd-f174-472f-af5a-45fdea7b4b4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Device-specific files">
+      <UniqueIdentifier>{fe55aa1f-4e9e-48bc-a967-f99f8d560b3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{436a53fa-166a-49b2-81b8-459e4e717438}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\CMSIS">
+      <UniqueIdentifier>{5a514884-e628-4b38-873b-dd2032d0c137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\CMSIS">
+      <UniqueIdentifier>{9826bab7-37df-4862-b6a1-d5b2a44c553c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Config">
+      <UniqueIdentifier>{d1620a1c-251c-406e-b3cf-199183955433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Config">
+      <UniqueIdentifier>{1e8a0fe8-ca58-4b86-9fa5-2df86944a040}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Core">
+      <UniqueIdentifier>{5ca0745e-201f-45a3-a68a-f33600b6df16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Core">
+      <UniqueIdentifier>{6b55076a-2a02-48f2-8ad0-b07238982684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Doc">
+      <UniqueIdentifier>{b289934f-e7cc-4840-84b5-f0168e922c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Doc">
+      <UniqueIdentifier>{fb4bb198-21b3-4d61-89b0-8791074b803f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers">
+      <UniqueIdentifier>{e85f6c0e-3639-422e-bbd6-d13cd67d33d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\BSP">
+      <UniqueIdentifier>{d271e656-b1a2-4360-885c-adb1830acdd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\BSP\Components">
+      <UniqueIdentifier>{64ac30e6-40df-4d8c-87c2-994d88288e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\CMSIS">
+      <UniqueIdentifier>{4b631b30-3638-411f-b2f9-b0def802d8e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\CMSIS\Core">
+      <UniqueIdentifier>{56b75efd-c58a-4348-a7da-57d34c914a82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\CMSIS\Core\Include">
+      <UniqueIdentifier>{886ef210-fbd3-4dd3-ba44-2b98f3d2c0bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\CMSIS\Device">
+      <UniqueIdentifier>{228dc8ed-503b-42ea-a4ca-d8fce622c4b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\CMSIS\Device\ST">
+      <UniqueIdentifier>{356a5465-3633-4fc6-9836-cfa56614e0d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\CMSIS\Device\ST\STM32F7xx">
+      <UniqueIdentifier>{b63a7e1a-6da0-4d23-8876-2e9e19b2f409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\CMSIS\Device\ST\STM32F7xx\Include">
+      <UniqueIdentifier>{8ccfc30c-5ff0-4991-8f41-7c2fdf97d20a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\STM32F7xx_HAL_Driver">
+      <UniqueIdentifier>{1335076c-cee3-4ccd-ba5e-6cb82679e52d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\STM32F7xx_HAL_Driver\Inc">
+      <UniqueIdentifier>{ab7329d6-78d9-4021-a699-77889cb8fb01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\STM32F7xx_HAL_Driver\Inc\Legacy">
+      <UniqueIdentifier>{b2f8ddd3-bb3c-4256-a45d-40ab7739e5fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Drivers\STM32F7xx_HAL_Driver\Src">
+      <UniqueIdentifier>{d65f2e68-8aba-4789-9892-c5e68969e433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers">
+      <UniqueIdentifier>{78a516ba-1a68-4cad-b8da-c53125f7138c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\BSP">
+      <UniqueIdentifier>{3cbd0dfa-431c-49ad-8267-3da2b1ca1533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\BSP\Components">
+      <UniqueIdentifier>{f842592f-80e3-4f3f-a3a4-2c04cf3e78bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\CMSIS">
+      <UniqueIdentifier>{4cc018ec-5500-4638-867d-f64610ecc60d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\CMSIS\Core">
+      <UniqueIdentifier>{e882938e-fbd2-466f-acab-46eb9b41a588}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\CMSIS\Core\Include">
+      <UniqueIdentifier>{a8e9eafc-8c5c-4091-9044-ef47c1c03447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\CMSIS\Device">
+      <UniqueIdentifier>{f38b2605-f5ad-468a-bf23-9b8483540fc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\CMSIS\Device\ST">
+      <UniqueIdentifier>{dc5586a3-cc3e-4e9b-81d1-021a6bfe5692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\CMSIS\Device\ST\STM32F7xx">
+      <UniqueIdentifier>{ca4f7e0a-b929-4f87-bab2-b3d2cef5babc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include">
+      <UniqueIdentifier>{c77cf4a9-9f40-4aad-97d7-d0fb7870b207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\STM32F7xx_HAL_Driver">
+      <UniqueIdentifier>{acdb7cbe-1fc5-468e-80a0-6fa9502a20b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\STM32F7xx_HAL_Driver\Inc">
+      <UniqueIdentifier>{a13fd703-380f-40ff-b283-c53291edf9c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\STM32F7xx_HAL_Driver\Inc\Legacy">
+      <UniqueIdentifier>{6aca02ed-43b5-489f-87c4-ac31cbb677c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Drivers\STM32F7xx_HAL_Driver\Src">
+      <UniqueIdentifier>{ae242e7a-8fd7-4e5a-aee6-f0216a363292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\EventRecorder">
+      <UniqueIdentifier>{88ab73c7-e076-4068-a935-241aa79627e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\EventRecorder">
+      <UniqueIdentifier>{417cf8e0-6eae-4713-840d-1b69baadd62d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\FATFS">
+      <UniqueIdentifier>{34864ac9-f992-495d-973a-e2f031439bd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\FATFS\App">
+      <UniqueIdentifier>{f12e58ef-8787-4c80-a7f4-4d630ca90af9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\FATFS">
+      <UniqueIdentifier>{90515935-9c96-4df3-b42f-d4853e823427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\FATFS\App">
+      <UniqueIdentifier>{8e3e2085-d791-46a9-8302-7a6fe6facf0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\GUI">
+      <UniqueIdentifier>{8d497867-3823-4514-b133-452894f69fc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\GUI\Config">
+      <UniqueIdentifier>{b0eca7d4-f710-4e52-8777-973e836bffac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\GUI\Core">
+      <UniqueIdentifier>{d69ae3c0-3aec-4c9c-9e6c-96a72444d0a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GUI">
+      <UniqueIdentifier>{7a5214ce-4a79-457e-8da8-0286fee7de50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GUI\Config">
+      <UniqueIdentifier>{afe4ad7d-2684-43e2-815d-f4c861c7a1b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\GUI\Core">
+      <UniqueIdentifier>{03cc31ab-19f8-4cd6-a08e-4bed894cc92e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\MDK-ARM">
+      <UniqueIdentifier>{d595ba40-f1d7-4985-a836-a76dff208044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\MDK-ARM">
+      <UniqueIdentifier>{141085e0-5c22-4f7f-8169-6c5b166bfdfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares">
+      <UniqueIdentifier>{80a4ea63-8998-46d0-b334-93cc36e76711}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\ST">
+      <UniqueIdentifier>{f9789869-e05c-4d54-8906-5f40edb483a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\ST\STM32_USB_Device_Library">
+      <UniqueIdentifier>{0fa5b308-aee6-4cfb-bc3c-bb98dd2bbdbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\ST\STM32_USB_Device_Library\Class">
+      <UniqueIdentifier>{6f7dad9b-57e9-4225-8b90-f6a8a3c92913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC">
+      <UniqueIdentifier>{d27c0acc-5a7c-4b04-af13-98cbc47bf05d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Inc">
+      <UniqueIdentifier>{af58e224-029d-4cc8-9822-9e92293d71e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Src">
+      <UniqueIdentifier>{8809176d-4379-4377-acda-19b3455c2bc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\ST\STM32_USB_Device_Library\Core">
+      <UniqueIdentifier>{c33027ff-7507-42ff-8fc8-eaf2c191069b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\ST\STM32_USB_Device_Library\Core\Inc">
+      <UniqueIdentifier>{e5e10f0c-da4b-47e1-951d-06652fa165cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\ST\STM32_USB_Device_Library\Core\Src">
+      <UniqueIdentifier>{9f0b93b2-e6c9-4393-b02e-00b10176e6f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party">
+      <UniqueIdentifier>{e8327f26-8bac-4a21-9f37-dcbfb9bce593}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\emWin">
+      <UniqueIdentifier>{87dbd7ff-e3b2-46a2-b2f8-06c53fa7df36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\emWin\inc">
+      <UniqueIdentifier>{473aae71-0df9-47ff-979d-e29d192ec3f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\emWin\OS">
+      <UniqueIdentifier>{d690d01c-54bb-4653-a357-5b3119ccca5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FatFs">
+      <UniqueIdentifier>{4aa660bb-b3ed-40d6-b934-4eacfe27a6f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FatFs\src">
+      <UniqueIdentifier>{c5549a88-bf00-4ede-8989-b8cebabd5c04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FreeRTOS">
+      <UniqueIdentifier>{c6eb0f34-fe18-47c9-833e-c6a5c1302263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FreeRTOS\Source">
+      <UniqueIdentifier>{e4e8c02c-f150-4d31-bf02-98553216c1a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS">
+      <UniqueIdentifier>{98f67871-9fd7-413f-9de8-fa3a54be6fad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FreeRTOS\Source\include">
+      <UniqueIdentifier>{0066c736-63f3-4eff-b27e-9b6f878d49b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FreeRTOS\Source\portable">
+      <UniqueIdentifier>{987121fc-c093-4609-85b9-10d74202f1d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC">
+      <UniqueIdentifier>{0993943a-6b15-4429-b6da-e57a12d0b418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM7">
+      <UniqueIdentifier>{f119598f-5cac-47de-a6f0-60abad450313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM7\r0p1">
+      <UniqueIdentifier>{12499779-12be-49a3-8a2e-afbe60639353}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang">
+      <UniqueIdentifier>{14a85806-2c1a-45d5-997b-7ad5342c0575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares">
+      <UniqueIdentifier>{88dfd3db-6fb1-43bb-9136-1bc8f17b1465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\ST">
+      <UniqueIdentifier>{a79fd2ac-84b9-439f-a519-a8a5f7db0fcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\ST\STM32_USB_Device_Library">
+      <UniqueIdentifier>{2463ad17-3239-4e9f-80d2-89af3c5a40cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\ST\STM32_USB_Device_Library\Class">
+      <UniqueIdentifier>{78707169-1269-4253-af35-124b0ee997b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC">
+      <UniqueIdentifier>{551453d0-7b04-4a35-b99e-c951697012d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Inc">
+      <UniqueIdentifier>{0ed8523d-894c-4c3f-b6ff-9d3c7accb528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Src">
+      <UniqueIdentifier>{b16cf504-0dc6-4052-a89a-bc4700f560fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\ST\STM32_USB_Device_Library\Core">
+      <UniqueIdentifier>{150dbfca-93b5-4467-be6b-b58dcc264d80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\ST\STM32_USB_Device_Library\Core\Inc">
+      <UniqueIdentifier>{6c4f5cd6-9748-421f-982d-c02e744bd07e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\ST\STM32_USB_Device_Library\Core\Src">
+      <UniqueIdentifier>{819bb03b-d7cd-4f18-afca-9993957730e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party">
+      <UniqueIdentifier>{057a78d5-da76-45f4-8ffb-0fc8796216a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\emWin">
+      <UniqueIdentifier>{204ab823-574f-43e1-bccb-15a1c722cf21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\emWin\inc">
+      <UniqueIdentifier>{e63091fe-e193-43a6-b8c2-2bff653ed74b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\emWin\OS">
+      <UniqueIdentifier>{ab8fda9b-4f94-498b-90e5-fd9ab55fc776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FatFs">
+      <UniqueIdentifier>{ccaad438-e03d-4807-8f61-4225c7c2bee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FatFs\src">
+      <UniqueIdentifier>{493ae8e0-b355-44da-adb7-0ff5f2a645ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FreeRTOS">
+      <UniqueIdentifier>{3e17253a-917e-47da-a402-3bbd9f274ed4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FreeRTOS\Source">
+      <UniqueIdentifier>{c85b966a-b3c7-4689-b178-a9fa726807ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS">
+      <UniqueIdentifier>{7320fdb1-a5ec-4dd1-ae41-eb886c8eff45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FreeRTOS\Source\include">
+      <UniqueIdentifier>{7a3ce039-b683-41b5-a94b-d2ebc9e9edab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FreeRTOS\Source\portable">
+      <UniqueIdentifier>{ee2534b8-a5db-486a-9143-f21656865095}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC">
+      <UniqueIdentifier>{da7c7f34-505f-49e0-924b-08888c3c2026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM7">
+      <UniqueIdentifier>{0fafe26e-b01e-4d44-9db5-f9f420e6a501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM7\r0p1">
+      <UniqueIdentifier>{e7725cb7-cdeb-4c40-b293-65a42330bf79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang">
+      <UniqueIdentifier>{b9be58f8-4b63-4652-a5ce-4e2befb68c9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\RTE">
+      <UniqueIdentifier>{26e69362-8eb2-44dd-95f8-b0d6a53ce49b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\RTE">
+      <UniqueIdentifier>{ccf1cd09-23d0-4fa2-8d66-129fbb121478}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\SystemView">
+      <UniqueIdentifier>{254f73b5-c2ca-411e-a4bf-ff00f46ee1ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\SystemView\Config">
+      <UniqueIdentifier>{c0abd599-5cab-4715-b15f-f98855389d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\SystemView\OS">
+      <UniqueIdentifier>{c3174dcc-f88f-45ed-b6e8-376777aa2580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\SystemView\SEGGER">
+      <UniqueIdentifier>{35eca411-c9d8-41fe-8951-feb005f421a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Test">
+      <UniqueIdentifier>{95ebef68-a7ae-49c4-b6b8-74d01045e9e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Test">
+      <UniqueIdentifier>{f15393ab-db01-449a-833a-9ecbc7699782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\USB_DEVICE">
+      <UniqueIdentifier>{a4e014cc-b165-4076-9b27-4cedf46272a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\USB_DEVICE\App">
+      <UniqueIdentifier>{ee85e32f-c9b1-4306-9044-3162d62f3fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\USB_DEVICE">
+      <UniqueIdentifier>{ea02a9d4-4155-4fe0-be76-7deaf0061909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\USB_DEVICE\App">
+      <UniqueIdentifier>{5638be45-d5f2-4d50-9c45-9da7a1abcc0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Utilities">
+      <UniqueIdentifier>{f9356f7f-dfbd-4007-9723-3fe80552abf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Utilities\CPU">
+      <UniqueIdentifier>{141342ad-66ec-4375-9b78-552adda09bf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Utilities\Fonts">
+      <UniqueIdentifier>{fdf64f64-1a80-4df9-910c-a2b8abde58c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Utilities">
+      <UniqueIdentifier>{8661ffc9-a405-434c-b833-7c6087741ecc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Utilities\CPU">
+      <UniqueIdentifier>{bdc7bd64-11fa-4af0-b51f-325a7d741e74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Utilities\Fonts">
+      <UniqueIdentifier>{f95a6112-a8d5-4db5-8661-7bcce2a6eb12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Middlewares\Third_Party\emWin\Lib">
+      <UniqueIdentifier>{9d21c10a-eb1c-47e8-a011-cd6c68eb6e57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Middlewares\Third_Party\emWin\Lib">
+      <UniqueIdentifier>{012e0993-754e-4fe1-bd55-887ff6244d09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Inc">
+      <UniqueIdentifier>{62152bfe-e2bb-4f09-8029-659c2460be27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Modules">
+      <UniqueIdentifier>{55f29869-6518-4b12-9742-97656b2242ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\Modules">
+      <UniqueIdentifier>{8dc74c08-1848-47aa-a734-30352445b174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\RTT">
+      <UniqueIdentifier>{b2f1403d-796b-46f5-a518-f59e2170b823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\RTT">
+      <UniqueIdentifier>{3f625eab-211d-45ec-83e6-d6b329157489}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="mcu.props">
+      <Filter>Source files\Device-specific files</Filter>
+    </None>
+    <ClInclude Include="$(BSP_ROOT)\Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h">
+      <Filter>Header files\Device-specific files</Filter>
+    </ClInclude>
+    <None Include="EmbeddedProject-Debug.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="EmbeddedProject-Release.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="MCU.xml">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <ClCompile Include="Drivers\BSP\bsp_driver_bat.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_fmc_sdram.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_fmc_sram.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_gpio.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_gps.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_i2c_smbus.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_led.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_ltdc.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_mpu.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_qspi.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_rtc.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_smbus_gpio.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_tftlcd.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_timer.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_touch.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_ts_iic.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_usart.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_wifi.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\Components\ft5206.c">
+      <Filter>Source files\Drivers\BSP\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\Components\gt911.c">
+      <Filter>Source files\Drivers\BSP\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\Components\mx25l256.c">
+      <Filter>Source files\Drivers\BSP\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\Components\w25qxx.c">
+      <Filter>Source files\Drivers\BSP\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_cortex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_crc.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_crc_ex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_cryp.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_dma.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_dma2d.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_dma_ex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_gpio.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_i2c.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_i2c_ex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_ltdc.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_ltdc_ex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_pcd.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_pcd_ex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_pwr.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_pwr_ex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_qspi.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_rcc.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_rcc_ex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_rtc.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_rtc_ex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_sd.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_sdram.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_smartcard.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_smartcard_ex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_smbus.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_spi.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_sram.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_tim.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_tim_ex.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_uart.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_hal_usart.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_ll_fmc.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_ll_sdmmc.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_ll_usb.c">
+      <Filter>Source files\Drivers\STM32F7xx_HAL_Driver\Src</Filter>
+    </ClCompile>
+    <ClInclude Include="Drivers\BSP\bsp_driver_bat.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_fmc_sdram.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_fmc_sram.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_gpio.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_gps.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_i2c_smbus.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_led.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_ltdc.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_mpu.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_qspi.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_rtc.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_smbus_gpio.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_tftlcd.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_timer.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_touch.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_ts_iic.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_usart.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_wifi.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\Components\ft5206.h">
+      <Filter>Header files\Drivers\BSP\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\Components\gt911.h">
+      <Filter>Header files\Drivers\BSP\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\Components\mx25l256.h">
+      <Filter>Header files\Drivers\BSP\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\Components\w25qxx.h">
+      <Filter>Header files\Drivers\BSP\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\arm_common_tables.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\arm_const_structs.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\arm_math.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_armcc.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_armclang.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_armclang_ltm.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_compiler.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_gcc.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_iccarm.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_version.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_armv81mml.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_armv8mbl.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_armv8mml.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm0.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm0plus.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm1.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm23.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm3.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm33.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm35p.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm4.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm7.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_sc000.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\core_sc300.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\mpu_armv7.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\mpu_armv8.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Core\Include\tz_context.h">
+      <Filter>Header files\Drivers\CMSIS\Core\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f722xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f723xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f730xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f732xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f733xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f745xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f750xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f756xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f765xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f767xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f769xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f777xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f779xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32F7xx\Include\system_stm32f7xx.h">
+      <Filter>Header files\Drivers\CMSIS\Device\ST\STM32F7xx\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_adc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_adc_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_can.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_cec.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_conf_template.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_cortex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_crc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_crc_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_cryp.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_cryp_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dac.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dac_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dcmi.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dcmi_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_def.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dfsdm.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma2d.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dma_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_dsi.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_eth.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_exti.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_flash.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_flash_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_gpio.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_gpio_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_hash.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_hash_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_hcd.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_i2c.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_i2c_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_i2s.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_irda.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_irda_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_iwdg.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_jpeg.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_lptim.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_ltdc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_ltdc_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_mdios.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_mmc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_nand.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_nor.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_pcd.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_pcd_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_pwr.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_pwr_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_qspi.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rcc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rcc_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rng.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rtc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_rtc_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_sai.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_sai_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_sd.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_sdram.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_smartcard.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_smartcard_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_smbus.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_spdifrx.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_spi.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_spi_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_sram.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_tim.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_tim_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_uart.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_uart_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_usart.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_usart_ex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal_wwdg.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_adc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_bus.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_cortex.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_crc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_dac.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_dma.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_dma2d.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_exti.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_fmc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_gpio.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_i2c.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_iwdg.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_lptim.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_pwr.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_rcc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_rng.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_rtc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_sdmmc.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_spi.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_system.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_tim.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_usart.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_usb.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_utils.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32f7xx_ll_wwdg.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\stm32_assert_template.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\Legacy\stm32f7xx_hal_can_legacy.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc\Legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\STM32F7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h">
+      <Filter>Header files\Drivers\STM32F7xx_HAL_Driver\Inc\Legacy</Filter>
+    </ClInclude>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Src\usbd_msc.c">
+      <Filter>Source files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Src\usbd_msc_bot.c">
+      <Filter>Source files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Src\usbd_msc_data.c">
+      <Filter>Source files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Src\usbd_msc_scsi.c">
+      <Filter>Source files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_core.c">
+      <Filter>Source files\Middlewares\ST\STM32_USB_Device_Library\Core\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c">
+      <Filter>Source files\Middlewares\ST\STM32_USB_Device_Library\Core\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
+      <Filter>Source files\Middlewares\ST\STM32_USB_Device_Library\Core\Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\emWin\OS\GUI_X_FreeRTOS.c">
+      <Filter>Source files\Middlewares\Third_Party\emWin\OS</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\diskio.c">
+      <Filter>Source files\Middlewares\Third_Party\FatFs\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff.c">
+      <Filter>Source files\Middlewares\Third_Party\FatFs\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\ffsystem.c">
+      <Filter>Source files\Middlewares\Third_Party\FatFs\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\ffunicode.c">
+      <Filter>Source files\Middlewares\Third_Party\FatFs\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.c">
+      <Filter>Source files\Middlewares\Third_Party\FatFs\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FreeRTOS\Source\croutine.c">
+      <Filter>Source files\Middlewares\Third_Party\FreeRTOS\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FreeRTOS\Source\event_groups.c">
+      <Filter>Source files\Middlewares\Third_Party\FreeRTOS\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FreeRTOS\Source\list.c">
+      <Filter>Source files\Middlewares\Third_Party\FreeRTOS\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FreeRTOS\Source\queue.c">
+      <Filter>Source files\Middlewares\Third_Party\FreeRTOS\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FreeRTOS\Source\stream_buffer.c">
+      <Filter>Source files\Middlewares\Third_Party\FreeRTOS\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FreeRTOS\Source\tasks.c">
+      <Filter>Source files\Middlewares\Third_Party\FreeRTOS\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FreeRTOS\Source\timers.c">
+      <Filter>Source files\Middlewares\Third_Party\FreeRTOS\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS\cmsis_os2.c">
+      <Filter>Source files\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM7\r0p1\port.c">
+      <Filter>Source files\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM7\r0p1</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_4.c">
+      <Filter>Source files\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang</Filter>
+    </ClCompile>
+    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Inc\usbd_msc.h">
+      <Filter>Header files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Inc\usbd_msc_bot.h">
+      <Filter>Header files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Inc\usbd_msc_data.h">
+      <Filter>Header files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Inc\usbd_msc_scsi.h">
+      <Filter>Header files\Middlewares\ST\STM32_USB_Device_Library\Class\MSC\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h">
+      <Filter>Header files\Middlewares\ST\STM32_USB_Device_Library\Core\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h">
+      <Filter>Header files\Middlewares\ST\STM32_USB_Device_Library\Core\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h">
+      <Filter>Header files\Middlewares\ST\STM32_USB_Device_Library\Core\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h">
+      <Filter>Header files\Middlewares\ST\STM32_USB_Device_Library\Core\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\BUTTON.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\BUTTON_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\CALENDAR.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\CHECKBOX.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\CHECKBOX_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\CHOOSECOLOR.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\CHOOSEFILE.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\DIALOG.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\DIALOG_Intern.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\DROPDOWN.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\DROPDOWN_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\EDIT.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\EDIT_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\FRAMEWIN.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\FRAMEWIN_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\Global.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GRAPH.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GRAPH_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_BitPlains.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_DCache.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_DCache_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_Dist.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_FlexColor.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_FlexColor_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_IST3088.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_Lin.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_Lin_Opt_16.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_Lin_Opt_24.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_Lin_Opt_32.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_Lin_Opt_8.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_Lin_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_NoOpt_1_8.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_S1D13748.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_S1D13781.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_S1D15G00.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_SLin.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_SPage.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_SSD1926.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_Template.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_TemplateI.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIDRV_TemplateI_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUIMTDRV_TangoC32.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUITDRV_ADS7846.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_ARRAY.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_ARRAY_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_BMP_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_ConfDefaults.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_Debug.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_FontIntern.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_GCache_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_GIF_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_HOOK.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_JPEG_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_SetOrientation.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_SetOrientationCX.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_SIM_Win32.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_SPRITE_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_Type.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_Version.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI_VNC.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI__BiDi2_Brackets_800.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\GUI__BiDi2_Types_800.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\HEADER.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\HEADER_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\ICONVIEW.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\ICONVIEW_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\IMAGE.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\IMAGE_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\IP_FS.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\KNOB.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\KNOB_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LCD.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LCDConf.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LCD_ConfDefaults.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LCD_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LCD_Protected.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LCD_SIM.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LCD_X.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LISTBOX.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LISTBOX_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LISTVIEW.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LISTVIEW_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LISTWHEEL.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\LISTWHEEL_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\MENU.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\MENU_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\MESSAGEBOX.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\MULTIEDIT.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\MULTIPAGE.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\MULTIPAGE_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\PROGBAR.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\PROGBAR_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\RADIO.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\RADIO_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\SCROLLBAR.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\SCROLLBAR_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\SEGGER.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\SLIDER.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\SLIDER_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\SPINBOX.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\SPINBOX_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\SWIPELIST.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\SWIPELIST_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\TEXT.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\TEXT_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\TREEVIEW.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\TREEVIEW_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\WIDGET.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\WINDOW_Private.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\WM.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\WM_GUI.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\emWin\inc\WM_Intern.h">
+      <Filter>Header files\Middlewares\Third_Party\emWin\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\diskio.h">
+      <Filter>Header files\Middlewares\Third_Party\FatFs\src</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\ff.h">
+      <Filter>Header files\Middlewares\Third_Party\FatFs\src</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.h">
+      <Filter>Header files\Middlewares\Third_Party\FatFs\src</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\integer.h">
+      <Filter>Header files\Middlewares\Third_Party\FatFs\src</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS\cmsis_os2.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\croutine.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\deprecated_definitions.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\event_groups.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\list.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\message_buffer.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\mpu_prototypes.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\portable.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\queue.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\semphr.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\StackMacros.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\stack_macros.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\stream_buffer.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\task.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\include\timers.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM7\r0p1\portmacro.h">
+      <Filter>Header files\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM7\r0p1</Filter>
+    </ClInclude>
+    <None Include="README.md">
+      <Filter>Source files\Doc</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CMSIS\system_stm32f7xx.c">
+      <Filter>Source files\CMSIS</Filter>
+    </ClCompile>
+    <ClCompile Include="Config\sd_diskio_dma_rtos.c">
+      <Filter>Source files\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="Config\usbd_conf.c">
+      <Filter>Source files\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\bsp.c">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\delay.c">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\main.c">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\stm32f7xx_hal_msp.c">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\stm32f7xx_it.c">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\sys.c">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="EventRecorder\EventRecorder.c">
+      <Filter>Source files\EventRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="EventRecorder\retarget_io.c">
+      <Filter>Source files\EventRecorder</Filter>
+    </ClCompile>
+    <ClCompile Include="FATFS\App\fatfs.c">
+      <Filter>Source files\FATFS\App</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Config\GUIConf.c">
+      <Filter>Source files\GUI\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Config\GUI_X_Touch_Analog.c">
+      <Filter>Source files\GUI\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Config\LCDConf_RGB.c">
+      <Filter>Source files\GUI\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Core\GuiTask.c">
+      <Filter>Source files\GUI\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Core\WindowDLG.c">
+      <Filter>Source files\GUI\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\BatTest.c">
+      <Filter>Source files\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\bsp_ts_test.c">
+      <Filter>Source files\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\emwin_test.c">
+      <Filter>Source files\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\sd_test.c">
+      <Filter>Source files\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="USB_DEVICE\App\usbd_desc.c">
+      <Filter>Source files\USB_DEVICE\App</Filter>
+    </ClCompile>
+    <ClCompile Include="USB_DEVICE\App\usbd_storage_if.c">
+      <Filter>Source files\USB_DEVICE\App</Filter>
+    </ClCompile>
+    <ClCompile Include="USB_DEVICE\App\usb_device.c">
+      <Filter>Source files\USB_DEVICE\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\CPU\cpu_utils.c">
+      <Filter>Source files\Utilities\CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="Utilities\Fonts\font.c">
+      <Filter>Source files\Utilities\Fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="MDK-ARM\startup_stm32f767xx.s">
+      <Filter>Source files\MDK-ARM</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\App_Printf.c">
+      <Filter>Source files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_sd.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Config\sd_diskio.c">
+      <Filter>Source files\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_fpga.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\tdip.c">
+      <Filter>Source files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\fdip.c">
+      <Filter>Source files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\process.c">
+      <Filter>Source files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="RTT\SEGGER_RTT.c">
+      <Filter>Source files\RTT</Filter>
+    </ClCompile>
+    <ClCompile Include="RTT\SEGGER_RTT_printf.c">
+      <Filter>Source files\RTT</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\bsp_driver_temp.c">
+      <Filter>Source files\Drivers\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\BSP\Components\ds18s20.c">
+      <Filter>Source files\Drivers\BSP\Components</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Config\ffconf.h">
+      <Filter>Header files\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Config\FreeRTOSConfig.h">
+      <Filter>Header files\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Config\RTE_Components.h">
+      <Filter>Header files\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Config\RTE_Device.h">
+      <Filter>Header files\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Config\sd_diskio_dma_rtos.h">
+      <Filter>Header files\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Config\stm32f7xx_hal_conf.h">
+      <Filter>Header files\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Config\usbd_conf.h">
+      <Filter>Header files\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\bsp.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\delay.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\include.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\main.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\stm32f7xx_it.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\sys.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="EventRecorder\EventRecorder.h">
+      <Filter>Header files\EventRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="EventRecorder\EventRecorderConf.h">
+      <Filter>Header files\EventRecorder</Filter>
+    </ClInclude>
+    <ClInclude Include="FATFS\App\fatfs.h">
+      <Filter>Header files\FATFS\App</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Config\GUIConf.h">
+      <Filter>Header files\GUI\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Config\LCDConf_RGB.h">
+      <Filter>Header files\GUI\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Core\GuiTask.h">
+      <Filter>Header files\GUI\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="RTE\RTE_Components.h">
+      <Filter>Header files\RTE</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemView\Config\Global.h">
+      <Filter>Header files\SystemView\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemView\Config\SEGGER_RTT_Conf.h">
+      <Filter>Header files\SystemView\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemView\Config\SEGGER_SYSVIEW_Conf.h">
+      <Filter>Header files\SystemView\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemView\OS\SEGGER_SYSVIEW_FreeRTOS.h">
+      <Filter>Header files\SystemView\OS</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemView\SEGGER\SEGGER.h">
+      <Filter>Header files\SystemView\SEGGER</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemView\SEGGER\SEGGER_RTT.h">
+      <Filter>Header files\SystemView\SEGGER</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemView\SEGGER\SEGGER_SYSVIEW.h">
+      <Filter>Header files\SystemView\SEGGER</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemView\SEGGER\SEGGER_SYSVIEW_ConfDefaults.h">
+      <Filter>Header files\SystemView\SEGGER</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemView\SEGGER\SEGGER_SYSVIEW_Int.h">
+      <Filter>Header files\SystemView\SEGGER</Filter>
+    </ClInclude>
+    <ClInclude Include="USB_DEVICE\App\usbd_desc.h">
+      <Filter>Header files\USB_DEVICE\App</Filter>
+    </ClInclude>
+    <ClInclude Include="USB_DEVICE\App\usbd_storage_if.h">
+      <Filter>Header files\USB_DEVICE\App</Filter>
+    </ClInclude>
+    <ClInclude Include="USB_DEVICE\App\usb_device.h">
+      <Filter>Header files\USB_DEVICE\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\CPU\cpu_utils.h">
+      <Filter>Header files\Utilities\CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Fonts\font.h">
+      <Filter>Header files\Utilities\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\App_Printf.h">
+      <Filter>Header files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Config\sd_diskio.h">
+      <Filter>Header files\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_sd.h">
+      <Filter>Header files\Drivers\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\tdip.h">
+      <Filter>Header files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\fdip.h">
+      <Filter>Header files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\process.h">
+      <Filter>Header files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="RTT\SEGGER_RTT.h">
+      <Filter>Header files\RTT</Filter>
+    </ClInclude>
+    <ClInclude Include="RTT\SEGGER_RTT_Conf.h">
+      <Filter>Header files\RTT</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\bsp_driver_temp.h">
+      <Filter>Header files\Drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="Drivers\BSP\Components\ds18s20.h">
+      <Filter>Header files\Drivers\BSP\Components</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Middlewares\Third_Party\emWin\Lib\STemWin_CM7_OS_wc16_ot_ARGB.a">
+      <Filter>Source files\Middlewares\Third_Party\emWin\Lib</Filter>
+    </Library>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,574 @@
+/**
+  ******************************************************************************
+  * @file    
+  * @author  
+  * @version 
+  * @date    
+  * @brief   
+  ******************************************************************************
+  * @history
+
+  ******************************************************************************
+  */
+
+#include "include.h"
+
+char APRecvBuffer[USART1_RX_LEN];
+
+//const uint32_t gc_ulBaudrate = 115200;
+const uint32_t gc_ulBaudrate = 460800;
+const uint8_t gc_ucDatabit = 8;
+const uint8_t gc_ucStopbit = 1;
+const uint8_t gc_ucParity = 0;
+const uint8_t gc_ucFlowControl = 0;
+
+//AP模式的IP地址
+const char *c_IPAddress = "192.168.4.1";
+
+//WIFI AP模式,模块对外的无线参数
+char *g_pcAPSSID = "460800DDF20A";                  //SSID名称
+const char *c_APPassword = "12345678";         //连接密码
+const char c_APChannel = 1;                    //通道号
+const char c_APeEncryption = ECN_WPA_WPA2_PSK; //wpa/wpa2 aes加密方式
+
+//连接端口号
+const char *c_PortNum = "8086";
+
+//服务器超时时间，作为TCP Server时会踢掉一直不通信至超时时间的TCP Client，设为0表示不踢掉TCP Client
+const char *c_TCPTimeout = "0";
+
+/*
+*********************************************************************************************************
+*	函 数 名: BSP_ESP8266_Init
+*	功能说明: 配置无线模块相关的GPIO
+*	形    参: 无
+*	返 回 值: 无
+*********************************************************************************************************
+*/
+void BSP_ESP8266_Init(void)
+{
+    uint8_t i = 1;
+    GPIO_InitTypeDef GPIO_Initure;
+
+	ESP8266_RST_PORT_CLK_ENABLE();	//开启时钟
+    
+	ESP8266_RST_H();
+    
+	//ESP8266_RST
+	GPIO_Initure.Pin = ESP8266_RST_PIN;
+    GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;  //
+	GPIO_Initure.Pull = GPIO_PULLUP;          //
+    GPIO_Initure.Speed = GPIO_SPEED_FREQ_MEDIUM;     //
+	HAL_GPIO_Init(ESP8266_RST_PORT, &GPIO_Initure);     //初始化
+ /*
+    //软硬件复位均可，这里用硬件复位
+    ESP8266_RST_L();
+    Delay_ms(10);
+
+    ESP8266_RST_H();
+    Delay_ms(10);
+
+    __HAL_UART_CLEAR_IT(&huart1, UART_CLEAR_IDLEF);
+    __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE); //使能空闲中断
+    Delay_ms(1000);
+    HAL_UART_Receive_DMA(&huart1, g_ucUSART1_RX_BUF, USART1_RX_LEN);
+*/
+    //ATCmd_SetEcho(DISABLE);
+
+    //ATCmd_SetUart(gc_ulBaudrate, gc_ucDatabit, gc_ucStopbit, gc_ucParity, gc_ucFlowControl);
+    ATCmd_SetMode(AP);                                                                       //AP模式
+    ATCmd_SetAPIP((char *)c_IPAddress);                                                      //AP模式下的IP地址
+    ATCmd_SetAPPara((char *)g_pcAPSSID, (char *)c_APPassword, c_APChannel, c_APeEncryption); //设置AP模式下的SSID等信息
+
+    ATCmd_MuxLink(ENABLE);                      //启动多连接时才能开启 TCP 服务器，每次生产上电都要执行启动多连接并开启TCP服务器
+                                                //	ATCmd_MaxConnect(1);	//最大连接数，暂时不支持
+    ATCmd_TCPServer(ENABLE, (char *)c_PortNum); //开启 TCP 服务器
+    ATCmd_TCPTimeout((char *)c_TCPTimeout);     //超时时间为0表示不会踢掉TCP Client
+}
+
+/*******************************************************
+  * @brief  : 
+  * @note   : 
+  * @param  : 
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+void wifiRstEsp8266(void)
+{
+    uint8_t i = 1;
+    GPIO_InitTypeDef GPIO_Initure;
+
+    ESP8266_RST_PORT_CLK_ENABLE(); //开启时钟
+
+    ESP8266_RST_H();
+
+    //ESP8266_RST
+    GPIO_Initure.Pin = ESP8266_RST_PIN;
+    GPIO_Initure.Mode = GPIO_MODE_OUTPUT_PP;        //
+    GPIO_Initure.Pull = GPIO_PULLUP;                //
+    GPIO_Initure.Speed = GPIO_SPEED_FREQ_MEDIUM;    //
+    HAL_GPIO_Init(ESP8266_RST_PORT, &GPIO_Initure); //初始化
+
+    //软硬件复位均可，这里用硬件复位
+    ESP8266_RST_L();
+    Delay_ms(10);
+
+    ESP8266_RST_H();
+    Delay_ms(10);
+
+    //    ATCmd_RstCmd();
+    //    Delay_ms(20);
+
+    //    BSP_USART_Init(&huart1, USARTPort1, 115200);
+    __HAL_UART_CLEAR_IT(&huart1, UART_CLEAR_IDLEF);
+    __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE); //使能空闲中断
+    Delay_ms(1000);
+    HAL_UART_Receive_DMA(&huart1, g_ucUSART1_RX_BUF, USART1_RX_LEN);
+
+    //ATCmd_SetEcho(DISABLE);
+
+    ATCmd_SetMode(AP);                                                                       //AP模式
+    ATCmd_SetAPIP((char *)c_IPAddress);                                                      //AP模式下的IP地址
+    ATCmd_SetAPPara((char *)g_pcAPSSID, (char *)c_APPassword, c_APChannel, c_APeEncryption); //设置AP模式下的SSID等信息
+
+    ATCmd_MuxLink(ENABLE);                      //启动多连接时才能开启 TCP 服务器，每次生产上电都要执行启动多连接并开启TCP服务器
+                                                //	ATCmd_MaxConnect(1);	//最大连接数，暂时不支持
+    ATCmd_TCPServer(ENABLE, (char *)c_PortNum); //开启 TCP 服务器
+    ATCmd_TCPTimeout((char *)c_TCPTimeout);     //超时时间为0表示不会踢掉TCP Client
+}
+
+/*
+*********************************************************************************************************
+*	函 数 名: ESP8266_SendAT
+*	功能说明: 向模块发送AT命令。 本函数自动在AT字符串增加<CR>字符
+*	形    参: cmd : AT命令字符串，不包括末尾的回车<CR>. 以字符0结束
+*	返 回 值: 无
+*********************************************************************************************************
+*/
+void ESP8266_SendAT(char *pcTxStr)
+{
+    //const TickType_t xWaitTicks = pdMS_TO_TICKS(500); // 设置最大等待时间为 500ms
+    //USART1TxMsg_T tWifiTxMsg;
+    uint32_t ulLen = 0;
+    uint8_t *pucString = NULL;    
+
+//    memset(&tWifiTxMsg, 0, sizeof(struct USART1TxMessage_T));
+
+    pucString = (uint8_t *)pcTxStr;
+
+    while (*pucString++ != '\n') //长度计算时不能用stlen()，要以回车换行为结束符
+    {
+        ulLen++;
+    }
+    ulLen++; //\r\n的长度也要算进去
+
+    tWifiTxMsg.usLength = ulLen;
+
+    for (int i = 0; i < ulLen; i++)
+    {
+        tWifiTxMsg.ucTxBuf[i] = pcTxStr[i];
+    }
+
+    HAL_UART_Transmit_DMA(&huart1, tWifiTxMsg.ucTxBuf, tWifiTxMsg.usLength); //发送后要在USART1_DMA_TX_IRQHandler里清标志
+    while (HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX)
+    {
+    }
+/*    
+#ifdef DEBUG_TARGET
+    SEGGER_RTT_SetTerminal(0);
+    SEGGER_RTT_printf(0, "Send cmd(HEX): ");
+    App_Printf("Send cmd(HEX): ");
+    for(int i = 0; i < tWifiTxMsg.usLength; i++)
+    {
+        SEGGER_RTT_printf(0, "%#02x", (uint8_t)tWifiTxMsg.ucTxBuf[i]);
+        App_Printf("%#02x ", (uint8_t)tWifiTxMsg.ucTxBuf[i]);
+    }
+    SEGGER_RTT_printf(0, "\r\n");
+    App_Printf("\r\n");
+
+    SEGGER_RTT_SetTerminal(0);
+    SEGGER_RTT_printf(0, "Send cmd(ASCII): %s\r\n", tWifiTxMsg.usLength, tWifiTxMsg.ucTxBuf);
+    App_Printf("Send cmd(ASCII): %s\r\n", tWifiTxMsg.usLength, tWifiTxMsg.ucTxBuf);
+#endif
+*/
+    //ucStatus = WaitATCmdResponse("OK", 200) || WaitATCmdResponse(">", 200);
+    //if(ucStatus == FALSE) //没收到回复则再发一次
+    //{
+    //    HAL_UART_Transmit_DMA(&huart1, tWifiTxMsg.ucTxBuf, tWifiTxMsg.usLength); //发送后要在USART1_DMA_TX_IRQHandler里清标志
+    //    while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX)
+    //    {
+    //    }
+    //}
+}
+
+
+/*******************************************************
+  * @brief  : 发送数据命令
+  * @note   :
+  * @param  : pcStr:要发送的字符串
+  * @param  : usStrLength:要发送的字符串的字节数
+  * @param  : ucId:要发送数据给哪个客户端ID
+  * @retval :
+*******************************************************/
+void ATCmd_SendData(char *pcStr, uint16_t usStrLength, ENUM_ID_NO_TypeDef ucId)
+{
+    char cBuf[USART1_TX_LEN] = {0};
+    uint8_t ucStatus = FALSE;
+
+    if(ucId < 5) //多连接模式下传输方式
+    {
+        //sprintf(cBuf, "AT+CIPSEND=%d,%d", ucId, usStrLength + 2);
+        sprintf(cBuf, "AT+CIPSEND=%d,%d", ucId, usStrLength);
+        strcat(cBuf, "\r\n");
+    }
+    else //单连接模式下传输方式
+    {
+        //sprintf(cBuf, "AT+CIPSEND=%d", usStrLength + 2);
+        sprintf(cBuf, "AT+CIPSEND=%d", usStrLength);
+        strcat(cBuf, "\r\n");
+    }
+
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse(">", 100);
+
+    //strcpy(&pcStr[usStrLength], "\r");
+    //strcpy(&pcStr[usStrLength + 1], "\n");
+
+    //tWifiTxMsg.usLength = usStrLength + 2;
+    tWifiTxMsg.usLength = usStrLength;
+
+    for(int i = 0; i < tWifiTxMsg.usLength; i++)
+    {
+        tWifiTxMsg.ucTxBuf[i] = pcStr[i];
+    }
+
+    HAL_UART_Transmit_DMA(&huart1, tWifiTxMsg.ucTxBuf, tWifiTxMsg.usLength); //发送后要在USART1_DMA_TX_IRQHandler里清标志
+
+    while(HAL_UART_GetState(&huart1) == HAL_UART_STATE_BUSY_TX)
+    {
+    }
+
+    ucStatus = WaitATCmdResponse("OK", UART_TIMEOUT);
+
+/*
+#ifdef DEBUG_TARGET
+    SEGGER_RTT_SetTerminal(0);
+    SEGGER_RTT_printf(0, "Send data(HEX): ");
+    App_Printf("Send data(HEX): ");
+    for(int i = 0; i < tWifiTxMsg.usLength; i++)
+    {
+        SEGGER_RTT_printf(0, "%#02x", (uint8_t)tWifiTxMsg.ucTxBuf[i]);
+        App_Printf("%#02x ", (uint8_t)tWifiTxMsg.ucTxBuf[i]);
+    }
+    SEGGER_RTT_printf(0, "\r\n");
+    App_Printf("\r\n");
+
+    SEGGER_RTT_SetTerminal(0);
+    SEGGER_RTT_printf(0, "Send data(ASCII): %s\r\n", tWifiTxMsg.usLength, tWifiTxMsg.ucTxBuf);
+    App_Printf("Send data(ASCII): %s\r\n", tWifiTxMsg.usLength, tWifiTxMsg.ucTxBuf);
+#endif
+*/
+
+}
+
+/**
+ * @brief :设置 UART 配置，保存到 flash
+ * @note  :AT+UART_DEF=460800,8,1,0,0
+AT+UART_DEF=<baudrate>,
+<databits>,<stopbits>,
+<parity>,<flow control>
+ * @param :ulBaudrate
+ * @param :ucDatabit
+ * @param :ucStopbit
+ * @param :ucParity
+ * @param :ucFlowControl
+ * @return:
+ */
+void ATCmd_SetUart(uint32_t ulBaudrate, uint8_t ucDatabit, uint8_t ucStopbit, uint8_t ucParity, uint8_t ucFlowControl)
+{
+    char cBuf[128] = {0};
+
+    sprintf(cBuf, "AT+UART_DEF=%d,%d,%d,%d,%d", ulBaudrate, ucDatabit, ucStopbit, ucParity, ucFlowControl);
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse("OK", 200);
+}
+
+/*******************************************************
+  * @brief  : 
+  * @note   : 
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+void ATCmd_SetEcho(FunctionalState enumMode)
+{
+    char cBuf[64] = {0};
+    uint8_t ucSta = FALSE;
+
+    if (enumMode == ENABLE)
+    {
+        ESP8266_SendAT("ATE1\r\n");       
+    }
+    else
+    {
+        ESP8266_SendAT("ATE0\r\n");
+    }   
+    WaitATCmdResponse("OK", 200);
+}
+
+/*******************************************************
+  * @brief  : AT+ CWSAP 设置 AP 模式下的参数
+  * @note   : 例：AT+CWSAP="ESP8266","1234567890",5,3
+  * @param  : pcSSID:接入点名称
+  * @param  : pcPassWord:密码，最长 64 字节 ASCII
+  * @param  : ucChannel： 通道号
+  * @param  : enumPsdMode：加密方式代号   
+  * @retval : 
+*******************************************************/
+void ATCmd_SetAPPara(char *pcSSID, char *pcPassWord, uint8_t ucChannel, ENUM_AP_PsdMode_TypeDef enumPsdMode)
+{
+    char cBuf[128] = {0};
+
+    sprintf(cBuf, "AT+CWSAP=\"%s\",\"%s\",%d,%d", pcSSID, pcPassWord, ucChannel, enumPsdMode);
+    strcat(cBuf, "\r\n");
+  
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse("OK", 200);
+}
+
+/*******************************************************
+  * @brief  : 设置 AP 的 IP 地址
+  * @note   : 
+  * @param  : pcApIp:模块的 AP IP
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+void ATCmd_SetAPIP(char *pcApIp)
+{
+    char cBuf[64] = {0};
+
+    sprintf(cBuf, "AT+CIPAP=\"%s\"", pcApIp);
+    strcat(cBuf, "\r\n");
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse("OK", 200);
+}
+
+/*******************************************************
+  * @brief  : 查看已接入设备的 IP
+  * @note   : 
+  * @param  : pcStaIp，存放已接入设备的IP
+  * @param  : 
+  * @param  : 
+  * @retval : 1，有接入设备  0，无接入设备
+*******************************************************/
+uint8_t ATCmd_ListIP(char *pcStaIp)
+{
+    char cBuf[64] = {0};
+    uint8_t ucCount, ucLen;
+    char *pCh, *pCh1;
+
+    strcpy(cBuf, "AT+CWLIF");
+    strcat(cBuf, "\r\n");
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse("OK", 200);
+
+    pCh = strstr(APRecvBuffer, ",");
+    if (pCh)
+    {
+        pCh1 = strstr(APRecvBuffer, "AT+CWLIF\r\r\n") + 11;
+        ucLen = pCh - pCh1;
+    }
+    else
+    {
+        return 0;
+    }
+
+    for (ucCount = 0; ucCount < ucLen; ucCount++)
+    {
+        pcStaIp[ucCount] = *(pCh1 + ucCount);
+    }
+
+    pcStaIp[ucLen] = '\0';
+
+    return 1;
+}
+
+/********************************************************************************************************
+* 共同使用的 AT 命令
+********************************************************************************************************/
+
+/*******************************************************
+  * @brief  : 选择 WIFI工作模式
+  * @note   : 
+  * @param  : enumMode，工作模式：1 Station 模式，2 AP 模式，3 AP 兼 Station 模
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+void ATCmd_SetMode(ENUM_Net_ModeTypeDef enumMode)
+{
+    char cBuf[64] = {0};
+
+    sprintf(cBuf, "AT+CWMODE=%d", enumMode);
+    strcat(cBuf, "\r\n");
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse("OK", 200);
+}
+
+/*
+*********************************************************************************************************
+*	函 数 名: ATCmd_RstCmd
+*	功能说明: 重启模块
+*	形    参: 无
+*	返 回 值: 无
+*********************************************************************************************************
+*/
+void ATCmd_RstCmd(void)
+{
+    ESP8266_SendAT("AT+RST\r\n");
+    WaitATCmdResponse("OK", 200);
+}
+
+/*******************************************************
+  * @brief  : 启动多连接
+  * @note   : 
+  * @param  : multi:0 单路连接模式  1 多路连接模式
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+void ATCmd_MuxLink(FunctionalState enumEnUnvarnishTx)
+{
+    char cBuf[64] = {0};
+
+    sprintf(cBuf, "AT+CIPMUX=%d", (enumEnUnvarnishTx ? 1 : 0));
+    strcat(cBuf, "\r\n");
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse("OK", 200);
+}
+
+/*******************************************************
+  * @brief  : 设置服务器允许建立的最大连接数
+  * @note   : 此命令不一定支持，如需设置最大连接数，请在创建服务器之前设置
+  * @param  : ucNum:服务器允许建立的最大连接数，取值范围： [1, 5]。
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+void ATCmd_MaxConnect(uint8_t ucNum)
+{
+    char cBuf[64] = {0};
+
+    sprintf(cBuf, "AT+CIPSERVERMAXCONN=%d", ucNum);
+    strcat(cBuf, "\r\n");
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse("OK", 200);
+}
+
+/*******************************************************
+  * @brief  : 建立或关闭 TCP 服务器
+  * @note   : 
+  * @param  : enumMode，开启/关闭
+  * @param  : pcPortNum，服务器端口号字符串
+  * @param  : 
+  * @retval : 
+*******************************************************/
+void ATCmd_TCPServer(FunctionalState enumMode, char *pcPortNum)
+{
+    char cBuf[64] = {0};
+
+    if (enumMode == ENABLE)
+    {
+        sprintf(cBuf, "AT+CIPSERVER=%d,%s", ENABLE, pcPortNum);                
+    }
+    if (enumMode == DISABLE)
+    {
+        sprintf(cBuf, "AT+CIPSERVER=%d", DISABLE);
+    }
+    strcat(cBuf, "\r\n");
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse("OK", 200);
+}
+
+/*******************************************************
+  * @brief  : 设置TCP服务器超时时间
+  * @note   : 
+  * @param  : pcTimeOver，服务器超时时间字符串，单位：秒
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+void ATCmd_TCPTimeout(char *pcTimeOver)
+{
+    char cBuf[64] = {0};
+
+    sprintf(cBuf, "AT+CIPSTO=%s", pcTimeOver);
+    strcat(cBuf, "\r\n");
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse("OK", 200);
+}
+
+/*******************************************************
+  * @brief  : 多连接模式下断开ucID的连接
+  * @note   : 
+  * @param  : <id>需要关闭的连接 id 
+  * @param  : 
+  * @param  : 
+  * @return : 
+*******************************************************/
+void ATCmd_TCPClose(uint8_t ucID)
+{
+    char cBuf[64] = {0};
+
+    sprintf(cBuf, "AT+CIPCLOSE=%d", ucID);
+    strcat(cBuf, "\r\n");
+    ESP8266_SendAT(cBuf);
+    WaitATCmdResponse("OK", 200);
+}
+/*******************************************************
+  * @brief  : 等待ESP8266返回指定的应答字符串
+  * @note   : 
+  * @param  : 
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+uint8_t WaitATCmdResponse(char *pcAckStr, uint16_t usTimeOut)
+{
+    uint32_t ulTimer;
+    uint8_t ucSta = FALSE;
+
+    HAL_UART_Receive_DMA(&huart1, g_ucUSART1_RX_BUF, USART1_RX_LEN);
+   
+    ulTimer = osKernelGetTickCount() + usTimeOut;
+    while(ulTimer > osKernelGetTickCount())
+    {
+        if(strstr((char *)g_ucUSART1_RX_BUF, (char *)pcAckStr))
+        {
+            ucSta = TRUE; 
+            break;
+        }
+    }
+
+    memset(g_ucUSART1_RX_BUF, 0, USART1_RX_LEN); // 清零
+/*
+    //vUsart1RxTask里释放
+    if (xSemaphoreTake(xATCmdAckSemaphore_Handle, usTimeOut) == pdTRUE)
+    {
+        ulTimer = osKernelGetTickCount() + usTimeOut;
+        while (ulTimer > osKernelGetTickCount())
+        {
+            if (strstr(APRecvBuffer, (char *)pcAckStr))            
+            {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+*/
+    return ucSta;
+}
+
+//---------------------------------------------------

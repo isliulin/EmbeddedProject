@@ -1,0 +1,233 @@
+/**
+  ******************************************************************************
+  * @file
+  * @author
+  * @version
+  * @date
+  * @brief
+  ******************************************************************************
+  * @history
+
+  ******************************************************************************
+  */
+
+/* Includes ------------------------------------------------------------------*/
+#include "include.h"
+
+
+
+SN_T tSerialNo;
+
+FIL SN_File;
+
+//FpgaTime_T tFpgaTime;
+
+//TF卡根目录文件名，存储仪器编号
+char *g_pcSNFileName = "SerialNumber.txt";
+char g_caTDIPFolder[5] = "TDIP";
+char g_caFDIPFolder[5] = "FDIP";
+
+uint8_t g_ucClientID;
+float g_fVoltage;	                      //电压
+float g_fCurrent;                         //电流
+uint8_t g_ucPulseWidth;                   //供电脉宽
+uint8_t g_ucDutyRatio;                    //占空比
+uint16_t g_usaMainFrequency[128] = {0};   //主频
+uint8_t g_ucFrequencyGroup;               //频组数
+uint8_t g_ucFrequencyRatio;               //频比
+uint16_t g_usSendCycleNumber;             //发射周期数,为0表示第一个频组无限循环
+uint8_t g_ucFrequencyGroupCycle;          //频组发射间隔   
+uint8_t g_ucNumberOfCycles;               //循环次数
+uint8_t g_ucSupplyStatus;                 //供电状态
+uint8_t g_ucWorkMode = 0xFF;              //工作模式 0xFF:待机,0x00:TDIP，0x01:FDIP单频、0x02:FDIP双频
+uint8_t g_ucWorkStatus = 0x00;            //工作状态 0x00:待机，0x01: 发射准备状态，0x02:正供，0x03:正停供，0x04:负供，0x05:负停供
+uint8_t g_ucExternalPower = 0;            //外部供电，0表示由电池供电，1为外部供电
+StartTime_T tStartTime;                   //启动时间
+float g_fTemperature;                     //温度
+float g_fLowFrequency;                    //低频频率
+uint8_t g_ucFrequencyGroupIndex = 0;      //频组序号
+uint8_t g_ucFirstSyncStart = 1;           //第一次同步启动
+uint8_t g_ucFirstStart = 1;               //第一次启动
+uint8_t g_ucSyncStart = 1;                //同步启动标志
+uint8_t g_ucFrequencyGroupCycleFlag = 1;  //频组间隔标志
+uint8_t g_ucSaveMode = 0xFF;              //存储方式，0：周期存储,1：全波形存储,0xFF:不存储
+uint8_t g_ucTriggerMode;                  //触发方式：0x00表示软件触发,0x01表示GPS时钟触发     
+uint8_t g_ucClientConncetStatus = 0;      //客户端连接状态，0：未连接，1：已连接
+uint8_t g_ucSendToClientFlag = 1;         //发送给客户端标志，为1时表示已经把启动键按下的状态发送给客户端了
+char g_caQueryFileName[20] = {0};
+char *g_pcClientMac = NULL;
+uint8_t g_ucPauseStatus = 0;              //暂停状态，0:没有暂停，1暂停状态
+float g_fProtectTemperature;              //保护温度
+uint8_t g_ucBatteryAlarmCapacity;         //电池报警容量
+float g_fSDAlarmCapacity;                 //SD卡报警剩余容量
+uint8_t g_ucTempFirstByte = 0;
+uint8_t g_ucDeviceStatusFirstByte = 0;    //设备状态第一字节
+uint8_t g_ucDeviceStatusSecondByte = 0;   //设备状态第二字节
+uint8_t g_ucDeviceStatusThirdByte = 0x03; //设备状态第三字节
+uint8_t g_ucDeviceStatusFourthByte = 0;   //设备状态第四字节
+uint8_t g_ucSendStopFlag = 0;
+uint8_t g_ucWaveStart = 1;
+uint8_t g_ucGpsTiming = 0;                //GPS授时标志
+uint16_t g_usBatFullChargeCapacity;       //电池总容量
+uint16_t g_usBatRelativeStateOfCharge;    //电池相对剩余百分比
+uint16_t g_usBatVoltage;                  //电池电压
+uint16_t g_usBatTemperature;              //电池温度
+float g_fFrequencyGroupTime;              //频组时间
+
+RTC_DateTypeDef tDateStructureget;
+RTC_TimeTypeDef tTimeStructureget;
+
+
+/*******************************************************
+  * @brief  : 
+  * @note   : 
+  * @param  : 
+  * @param  : 
+  * @param  : 
+  * @return : 
+*******************************************************/
+void BSP_Init(void)
+{
+    MPU_Memory_Protection();            //保护相关存储区域
+    Cache_Enable();                     //打开L1-Cache
+
+    HAL_Init();                     	 //初始化HAL库
+    Stm32_Clock_Init(432, 25, 2, 9);    //设置时钟,216Mhz
+    BSP_GPIO_Init();
+    
+    BSP_RTC_Init();
+    Delay_Init(216);                  //初始化延时函数
+    BSP_LED_Init(BLN_LED);            //呼吸灯（板载）
+    BSP_LED_Init(ERROR_LED);          //错误灯（板载）
+
+    BSP_USART_Init(&huart1, USARTPort1, gc_ulBaudrate);    //初始化USART 
+//	BSP_USART_Init(&huart2, USARTPort2, 115200);
+    BSP_SDRAM_Init();					//SDRAM初始化
+    BSP_FPGA_Init();
+
+    #ifdef DEBUG_TARGET
+    //BSP_TFTLCD_Init();  		        //LCD初始化
+    //BSP_TS_Init();				        //触摸屏初始化	
+    #endif
+    
+    MX25Lxx_Init();
+	BSP_SD_Init();
+    BSP_SMBus_Init();  
+    BSP_TEMP_Init();
+       
+}
+
+/*******************************************************
+  * @brief  : 读取文件一行的内容
+  * @note   : 
+  * @param  : fp：文件系统
+  * @param  : pcStr：数据指针
+  * @param  : ulLen：长度
+  * @retval : 
+*******************************************************/
+char * GetLineStr( FIL *fp, char *pcStr, uint32_t ulLen )
+{
+    uint32_t i, L;
+
+    if ( !f_eof( fp ) ) //读写指针没有到达文件末尾
+    {
+        f_gets( pcStr, ulLen, fp ); //从文件中读取字符串,读取到'\n'或者文件结束时读操作结束
+    }
+
+//    L = strlen( ( char * )pcStr );
+
+    for ( i = 0; i <= ulLen; i++ )
+    {
+        if ( pcStr[i] == '\n' )
+        {
+            pcStr[i] = 0;
+        }
+    }
+
+    return pcStr;
+}
+
+/** 
+ * @brief : 
+ * @note  :
+ * @param : 
+ * @param : 
+ * @param : 
+ * @return:
+ */
+void SaveClientMac(char *pcClientMac)
+{
+    MX25Lxx_Write((uint8_t *)pcClientMac, SAVE_MAC_ADDRESS, 6);
+}
+
+/**
+ * @brief :
+ * @note  :
+ * @param :
+ * @param :
+ * @param :
+ * @return:
+ */
+char *ReadClientMac(void)
+{
+    char *pcMac = NULL;
+    char caBuf[6] = {0};
+   
+    MX25Lxx_Read((uint8_t *)caBuf, SAVE_MAC_ADDRESS, 6);
+
+    pcMac = caBuf;
+    return pcMac;
+}
+
+
+/*******************************************************
+  * @brief  : 读取序列号（主机编号）
+  * @note   : 
+  * @param  : 
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+uint8_t ReadSN(void)
+{
+	char pcaSNPath[30] = {0};
+	char caStr[20] = {0};
+    FRESULT eResult;
+	uint8_t ucSNLen = 0;	//序列号长度
+
+	MX25Lxx_Read((uint8_t *)&tSerialNo, SN_ADDRESS, sizeof(tSerialNo));	
+	if(tSerialNo.ucInfo == 0xAA)    //外部FLASH里已经存有序列号（仪器编号）
+	{
+		g_pcAPSSID = (char*)&tSerialNo.ucaSN;	//仪器的编号作为SSID名称	
+		ucSNLen = strlen((char *)tSerialNo.ucaSN);
+
+		xSemaphoreGive(xFatfsMscSemaphore_Handle);	//释放信号量，在OTG_FS_IRQHandler获取
+	}
+    else //外部FLASH里没有则读出SD卡里的序列号写入
+	{
+        strcpy((char *)pcaSNPath, (char const *)g_caSDPath);
+        strcat((char *)pcaSNPath, (char *)g_pcSNFileName);
+
+        xSemaphoreTake(xFatfsMscSemaphore_Handle, portMAX_DELAY); //获取信号量，在OTG_FS_IRQHandler释放
+
+        HAL_NVIC_DisableIRQ(OTG_FS_IRQn);
+        eResult = f_open(&SN_File, pcaSNPath, FA_OPEN_EXISTING | FA_READ); //打开文件,如果文件不存在,则打开失败。
+        if (eResult == FR_OK)
+        {
+            GetLineStr(&SN_File, caStr, sizeof(caStr));
+            strcpy((char *)tSerialNo.ucaSN, caStr);
+
+            tSerialNo.ucInfo = 0xAA;
+            MX25Lxx_Write((uint8_t *)&tSerialNo, SN_ADDRESS, sizeof(tSerialNo));
+            g_pcAPSSID = (char *)&tSerialNo.ucaSN; //仪器的编号作为SSID名称
+            ucSNLen = strlen((char *)tSerialNo.ucaSN);
+        }
+
+        xSemaphoreGive(xFatfsMscSemaphore_Handle); //释放信号量，在OTG_FS_IRQHandler获取
+        HAL_NVIC_EnableIRQ(OTG_FS_IRQn);
+	}	
+	return ucSNLen;
+}
+
+
+/****END OF FILE****/

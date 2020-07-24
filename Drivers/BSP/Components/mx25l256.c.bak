@@ -1,0 +1,788 @@
+/**
+  ******************************************************************************
+    @file
+    @author
+    @version
+    @date
+    @brief
+  ******************************************************************************
+    @history
+
+  ******************************************************************************
+*/
+
+#include "include.h"
+
+
+uint8_t MX25Lxx_QSPI_MODE = 1;		//QSPI模式标志:0,SPI模式;1,QPI模式.
+
+void MX25Lxx_Init( void );					//初始化MX25Lxx
+static void MX25Lxx_QspiEnable( void );			//使能QSPI模式
+static void MX25Lxx_QspiDisable( void );			//关闭QSPI模式
+static uint32_t  MX25Lxx_ReadID( void );  	    		//读取FLASH ID
+static uint8_t MX25Lxx_ReadSR( void );          //读取状态寄存器
+static uint8_t MX25Lxx_ReadCR( void );			//读取MX25Lxx的配置寄存器
+static void MX25Lxx_WriteSR( uint8_t ucSR, uint8_t ucCR); //写状态寄存器
+static void MX25Lxx_WriteEnable( void );  		//写使能
+static void MX25Lxx_WriteDisable( void );		//写保护
+static void MX25Lxx_WriteNoCheck( uint8_t *pucBuffer, uint32_t ulWriteAddr, uint16_t usNumByteToRead ); //写flash,不校验
+void MX25Lxx_Read( uint8_t *pucBuffer, uint32_t ReadAddr, uint16_t NumByteToRead ); //读取flash
+void MX25Lxx_Write( uint8_t *pucBuffer, uint32_t ulWriteAddr, uint16_t usNumByteToWrite ); //写入flash
+static void MX25Lxx_EraseChip( void );    	  	//整片擦除
+static void MX25Lxx_EraseSector( uint32_t ulDstAddr );	//扇区擦除
+static void MX25Lxx_SoftwareReset( void );
+static void MX25Lxx_EnterFourBytesAddress( void );
+	
+/*******************************************************
+    @brief  :
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval :
+*******************************************************/
+void MX25Lxx_Init( void )
+{
+    uint8_t ucTemp1, ucTemp2;
+    uint32_t ulDevId;
+
+    BSP_QSPI_Init();				//初始化QSPI
+	
+	MX25Lxx_WriteEnable();	
+	MX25Lxx_QspiEnable();			//使能QSPI模式
+	MX25Lxx_WriteEnable();			//写使能			
+	MX25Lxx_EnterFourBytesAddress();//进入4字节模式
+	
+	MX25Lxx_WriteSR(0x42, 0x28);	
+	MX25Lxx_SoftwareReset();
+//    ucTemp1 = MX25Lxx_ReadSR();		//读状态寄存器	
+//	if((ucTemp1 & 0x42) != 0x42)
+//	{
+//		ucTemp1 = ucTemp1 | 0x42;	//Quad enable,  Erite enable
+//	}			 
+//	    
+//    ucTemp2 = MX25Lxx_ReadCR();		//读配置寄存器	
+//	if((ucTemp2 & 0x28) != 0x28)		//不是4字节地址模式
+//	{
+//		ucTemp2 = ucTemp2 | 0x28;	//
+//	}	
+//	
+//	MX25Lxx_WriteSR(ucTemp1, ucTemp2);	//Quad enable,  Erite enable,4add
+						
+	ulDevId = MX25Lxx_ReadID();		//读取FLASH ID.
+	ucTemp1 = MX25Lxx_ReadSR();		//读状态寄存器	
+	ucTemp2 = MX25Lxx_ReadCR();		//读配置寄存器,查询出来是3字节地址模式？？？？
+}
+
+/*******************************************************
+    @brief  : MX25Lxx进入QSPI模式
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval :
+*******************************************************/
+static void MX25Lxx_QspiEnable( void )
+{
+	uint32_t ulInstructionMode, ulDataMode;
+
+	ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+	ulDataMode        = QSPI_DATA_NONE;  
+	     	
+	QSPI_Send_CMD( 
+					ENTER_QUAD_CMD, 			//要发送的指令
+					0, 							//发送到的目的地址
+					0, 							//空指令周期数
+					ulInstructionMode, 			//指令模式
+					QSPI_ADDRESS_NONE, 			//地址模式
+					QSPI_ADDRESS_8_BITS, 		//地址长度
+					ulDataMode 					//数据模式 
+				);
+    MX25Lxx_QSPI_MODE = 1;				//标记QSPI模式
+}
+
+/*******************************************************
+    @brief  : MX25Lxx退出QSPI模式
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval :
+*******************************************************/
+static void MX25Lxx_QspiDisable( void )
+{
+	uint32_t ulInstructionMode, ulDataMode;
+
+	ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+	ulDataMode        = QSPI_DATA_NONE;  
+	     	
+	QSPI_Send_CMD( 
+					EXIT_QUAD_CMD, 				//要发送的指令
+					0, 							//发送到的目的地址
+					0, 							//空指令周期数
+					ulInstructionMode, 			//指令模式
+					QSPI_ADDRESS_NONE, 			//地址模式
+					QSPI_ADDRESS_8_BITS, 		//地址长度
+					ulDataMode 					//数据模式 	
+				);
+    MX25Lxx_QSPI_MODE = 0;		//标记SPI模式
+}
+
+
+
+/*******************************************************
+    @brief  :MX25Lxx写使能
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval :
+*******************************************************/
+static void MX25Lxx_WriteEnable( void )
+{
+	uint32_t ulInstructionMode, ulDataMode;
+
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+		ulDataMode        = QSPI_DATA_NONE;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+		ulDataMode        = QSPI_DATA_NONE;  
+	} 
+    	
+	QSPI_Send_CMD( 
+					WRITE_ENABLE_CMD, 			//要发送的指令
+					0, 							//发送到的目的地址
+					0, 							//空指令周期数
+					ulInstructionMode, 			//指令模式
+					QSPI_ADDRESS_NONE, 			//地址模式
+					QSPI_ADDRESS_8_BITS, 		//地址长度
+					ulDataMode 					//数据模式 
+				);	
+}
+
+/*******************************************************
+    @brief  :MX25Lxx写禁止
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval :
+*******************************************************/
+static void MX25Lxx_WriteDisable( void )
+{
+	uint32_t ulInstructionMode, ulDataMode;
+
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+		ulDataMode        = QSPI_DATA_NONE;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+		ulDataMode        = QSPI_DATA_NONE;  
+	} 
+    	
+	QSPI_Send_CMD( 
+					WRITE_DISABLE_CMD, 			//要发送的指令
+					0, 							//发送到的目的地址
+					0, 							//空指令周期数
+					ulInstructionMode, 			//指令模式
+					QSPI_ADDRESS_NONE, 			//地址模式
+					QSPI_ADDRESS_8_BITS, 		//地址长度
+					ulDataMode 					//数据模式 
+				);
+}
+
+/*******************************************************
+  * @brief  : This function set the QSPI memory in 4-byte address mode
+  * @note   : 
+  * @param  : 
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+static void MX25Lxx_EnterFourBytesAddress( void )
+{
+	uint32_t ulInstructionMode, ulDataMode;
+
+	ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+	ulDataMode        = QSPI_DATA_NONE;  
+	     	
+	QSPI_Send_CMD( 
+					ENTER_4_BYTE_ADDR_MODE_CMD,	//要发送的指令
+					0, 							//发送到的目的地址
+					0, 							//空指令周期数
+					ulInstructionMode, 			//指令模式
+					QSPI_ADDRESS_NONE, 			//地址模式
+					QSPI_ADDRESS_8_BITS, 		//地址长度
+					ulDataMode 					//数据模式 
+				);	
+}
+
+/*******************************************************
+    @brief  :读取芯片ID
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval :
+*******************************************************/
+static uint32_t MX25Lxx_ReadID( void )
+{
+    uint8_t ucBuf[3] = {0};
+    uint32_t usDeviceId;
+	uint32_t ulInstructionMode, ulDataMode, ulCommond;
+
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+		ulDataMode        = QSPI_DATA_4_LINES;
+		ulCommond		  =	MULTIPLE_IO_READ_ID_CMD;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+		ulDataMode        = QSPI_DATA_1_LINE;  
+		ulCommond		  =	READ_ID_CMD;
+	} 
+	    
+	QSPI_Send_CMD( 
+					ulCommond, 					//要发送的指令
+					0, 							//发送到的目的地址
+					0, 							//空指令周期数
+					ulInstructionMode, 			//指令模式
+					QSPI_ADDRESS_NONE, 			//地址模式
+					QSPI_ADDRESS_8_BITS, 		//地址长度
+					ulDataMode 					//数据模式
+				);
+	
+    QSPI_Receive( ucBuf, 3 );
+    usDeviceId = ( ucBuf[0] << 16 ) | ( ucBuf[1] << 8 ) | ucBuf[2];
+    return usDeviceId;
+}
+
+/*******************************************************
+    @brief  :读取MX25Lxx的状态寄存器
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval :状态寄存器值
+*******************************************************/
+static uint8_t MX25Lxx_ReadSR( void )
+{
+    uint8_t ucStatus = 0;
+	uint32_t ulInstructionMode, ulDataMode;
+
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+		ulDataMode        = QSPI_DATA_4_LINES;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+		ulDataMode        = QSPI_DATA_1_LINE;  
+	} 
+    
+	QSPI_Send_CMD( 
+					READ_STATUS_REG_CMD, 		//要发送的指令
+					0, 							//发送到的目的地址
+					0, 							//空指令周期数
+					ulInstructionMode, 			//指令模式
+					QSPI_ADDRESS_NONE, 			//地址模式
+					QSPI_ADDRESS_8_BITS, 		//地址长度
+					ulDataMode 					//数据模式
+				);	
+
+    QSPI_Receive( &ucStatus, 1 );
+    return ucStatus;
+}
+
+/*******************************************************
+    @brief  :读取MX25Lxx的配置寄存器
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval :配置寄存器值
+*******************************************************/
+static uint8_t MX25Lxx_ReadCR( void )
+{
+    uint8_t ucStatus = 0;
+	uint32_t ulInstructionMode, ulDataMode;
+
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+		ulDataMode        = QSPI_DATA_4_LINES;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+		ulDataMode        = QSPI_DATA_1_LINE;  
+	} 
+    
+	QSPI_Send_CMD( 
+					READ_CFG_REG_CMD, 			//要发送的指令
+					0, 							//发送到的目的地址
+					0, 							//空指令周期数
+					ulInstructionMode, 			//指令模式
+					QSPI_ADDRESS_NONE, 			//地址模式
+					QSPI_ADDRESS_8_BITS, 		//地址长度
+					ulDataMode 					//数据模式
+				);	
+
+    QSPI_Receive( &ucStatus, 1 );
+    return ucStatus;
+}
+
+/*******************************************************
+    @brief  : write enable
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval : 1=write enable,0=not write enable
+*******************************************************/
+static uint8_t MX25Lxx_ReadyToWrite( void )
+{
+    return ( ( (MX25Lxx_ReadSR() & MX25L256_SR_WREN) == MX25L256_SR_WREN) ? 1 : 0 );
+}
+
+/*******************************************************
+    @brief  : Write in Progress
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval : 1=write operation, 0=not in write operation
+*******************************************************/
+static uint8_t MX25Lxx_WriteComplete( void )
+{
+    return ( ( ( MX25Lxx_ReadSR() & MX25L256_SR_WIP ) == MX25L256_SR_WIP ) ? 1 : 0 );
+}
+
+/*******************************************************
+    @brief  :写MX25Lxx状态寄存器和配置寄存器
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval :
+*******************************************************/
+static void MX25Lxx_WriteSR( uint8_t ucSR, uint8_t ucCR )
+{
+    uint8_t ucStatus;
+	uint32_t ulInstructionMode, ulDataMode;
+	uint8_t ucSendBuf[2];
+	
+	ucSendBuf[0] = ucSR;
+	ucSendBuf[1] = ucCR;
+	
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+		ulDataMode        = QSPI_DATA_4_LINES;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+		ulDataMode        = QSPI_DATA_1_LINE;  
+	} 
+    
+    MX25Lxx_WriteEnable();
+    ucStatus = MX25Lxx_ReadyToWrite();	
+    if ( ucStatus )
+    {
+		QSPI_Send_CMD( 
+						WRITE_STATUS_CFG_REG_CMD, 	//要发送的指令
+						0, 							//发送到的目的地址
+						0, 							//空指令周期数
+						ulInstructionMode, 			//指令模式
+						QSPI_ADDRESS_NONE, 			//地址模式
+						QSPI_ADDRESS_8_BITS, 		//地址长度
+						ulDataMode 					//数据模式	
+					);		
+
+        QSPI_Transmit( ucSendBuf, 2 );
+				
+        while ( MX25Lxx_WriteComplete() )		
+		{
+			;//等待写入结束
+		}			
+    }
+	
+	
+	ucStatus = MX25Lxx_ReadyToWrite();	
+    if ( ucStatus )
+    {
+		QSPI_Send_CMD( 
+						WRITE_STATUS_CFG_REG_CMD, 	//要发送的指令
+						0, 							//发送到的目的地址
+						0, 							//空指令周期数
+						ulInstructionMode, 			//指令模式
+						QSPI_ADDRESS_NONE, 			//地址模式
+						QSPI_ADDRESS_8_BITS, 		//地址长度
+						ulDataMode 					//数据模式	
+					);		
+
+        QSPI_Transmit( &ucSR, 1 );
+		QSPI_Transmit( &ucCR, 1 );
+    }	
+}
+
+/*******************************************************
+    @brief  :读取SPI FLASH 仅支持QPI模式
+    @note   : 在指定地址开始读取指定长度的数据
+    @param  :pucBuffer:数据存储区
+    @param  :ReadAddr:开始读取的地址(最大32bit)
+    @param  :NumByteToRead:要读取的字节数(最大65535)
+    @retval :
+*******************************************************/
+void MX25Lxx_Read( uint8_t *pucBuffer, uint32_t ulReadAddr, uint16_t usNumByteToRead )
+{
+	uint32_t ulInstructionMode, ulAddressMode, ulDataMode, ulCommond, ucDummyCycle;
+
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+		ulAddressMode     = QSPI_ADDRESS_4_LINES;
+		ulDataMode        = QSPI_DATA_4_LINES;
+		ulCommond		  =	QUAD_READ_4_BYTE_ADDR_CMD;
+		ucDummyCycle	  = 6;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+		ulAddressMode     = QSPI_ADDRESS_1_LINE;
+		ulDataMode        = QSPI_DATA_1_LINE;  
+		ulCommond		  =	FAST_READ_CMD;
+		ucDummyCycle	  = 8;
+	} 
+    
+	QSPI_Send_CMD( 
+					ulCommond,					//要发送的指令
+					ulReadAddr, 				//发送到的目的地址
+					ucDummyCycle, 				//空指令周期数
+					ulInstructionMode, 			//指令模式
+					ulAddressMode, 				//地址模式
+					QSPI_ADDRESS_32_BITS, 		//地址长度
+					ulDataMode 					//数据模式
+				);	
+
+	QSPI_Receive( pucBuffer, usNumByteToRead );
+}
+
+/*******************************************************
+    @brief  :在指定地址开始写入最大256字节的数据
+    @note   :SPI在一页(0~65535)内写入少于256个字节的数据
+    @param  :pucBuffer:数据存储区
+    @param  :ulWriteAddr:开始写入的地址(24bit)
+    @param  :usNumByteToRead:要写入的字节数(最大256),该数不应该超过该页的剩余字节数!!!
+    @retval :
+*******************************************************/
+static void MX25Lxx_WritePage( uint8_t *pucBuffer, uint32_t ulWriteAddr, uint16_t usNumByteToWrite )
+{
+	uint32_t ulInstructionMode, ulAddressMode, ulDataMode, ulCommond;
+
+	MX25Lxx_WriteEnable();					//写使能
+	
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+		ulAddressMode     = QSPI_ADDRESS_4_LINES;
+		ulDataMode        = QSPI_DATA_4_LINES;
+		ulCommond		  =	QSPI_PAGE_PROG_4_BYTE_ADDR_CMD;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+		ulAddressMode     = QSPI_ADDRESS_1_LINE;
+		ulDataMode        = QSPI_DATA_1_LINE; 
+		ulCommond		  =	PAGE_PROG_CMD;		
+	} 
+   
+    if ( MX25Lxx_ReadyToWrite() )
+    {
+		QSPI_Send_CMD( 
+						ulCommond, 					//要发送的指令
+						ulWriteAddr, 				//发送到的目的地址
+						0, 							//空指令周期数
+						ulInstructionMode, 			//指令模式
+						ulAddressMode, 				//地址模式
+						QSPI_ADDRESS_32_BITS, 		//地址长度
+						ulDataMode 					//数据模式	
+					);
+	 
+        QSPI_Transmit( pucBuffer, usNumByteToWrite );
+
+        while ( MX25Lxx_WriteComplete() )		
+		{
+			;//等待写入结束
+		}
+    }
+}
+
+/*******************************************************
+    @brief  :无检验写SPI FLASH
+    @note   :必须确保所写的地址范围内的数据全部为0XFF,否则在非0XFF处写入的数据将失败!
+            具有自动换页功能,在指定地址开始写入指定长度的数据,但是要确保地址不越界!
+    @param  :pucBuffer:数据存储区
+    @param  :ulWriteAddr:开始写入的地址(最大32bit)
+    @param  :usNumByteToRead:要写入的字节数(最大65535)
+    @retval :CHECK OK
+*******************************************************/
+static void MX25Lxx_WriteNoCheck( uint8_t *pucBuffer, uint32_t ulWriteAddr, uint16_t usNumByteToWrite )
+{
+    uint16_t usPageRemain;
+    usPageRemain = 256 - ulWriteAddr % 256; //单页剩余的字节数
+
+    if ( usNumByteToWrite <= usPageRemain )
+    {
+        usPageRemain = usNumByteToWrite;    //不大于256个字节
+    }
+
+    for ( ;; )
+    {
+        MX25Lxx_WritePage( pucBuffer, ulWriteAddr, usPageRemain );
+
+        if ( usNumByteToWrite == usPageRemain )
+        {
+            break;    //写入结束了
+        }
+        else //usNumByteToRead>usPageRemain
+        {
+            pucBuffer += usPageRemain;
+            ulWriteAddr += usPageRemain;
+
+            usNumByteToWrite -= usPageRemain;			 //减去已经写入了的字节数
+
+            if ( usNumByteToWrite > 256 )
+            {
+                usPageRemain = 256;    //一次可以写入256个字节
+            }
+            else
+            {
+                usPageRemain = usNumByteToWrite;    //不够256个字节了
+            }
+        }
+    }
+}
+
+
+/*******************************************************
+    @brief  :写SPI FLASH  在指定地址开始写入指定长度的数据
+    @note   :该函数带擦除操作!
+    @param  :pucBuffer:数据存储区
+    @param  :ulWriteAddr:开始写入的地址(最大32bit)
+    @param  :usNumByteToRead:要写入的字节数(最大65535)
+    @retval :
+*******************************************************/
+void MX25Lxx_Write( uint8_t *pucBuffer, uint32_t ulWriteAddr, uint16_t usNumByteToWrite )
+{
+    uint8_t ucBuf[4096] = {0};
+    uint32_t ulSectionLocation;
+    uint16_t usSectionOffset;
+    uint16_t usSectionRemain;
+    uint16_t i;
+//    uint8_t *pucMX25Lxx_BUF;
+
+//    pucMX25Lxx_BUF = ucBuf;
+    ulSectionLocation = ulWriteAddr / 4096; //扇区地址
+    usSectionOffset = ulWriteAddr % 4096; //在扇区内的偏移
+    usSectionRemain = 4096 - usSectionOffset; //扇区剩余空间大小
+
+    if ( usNumByteToWrite <= usSectionRemain )
+    {
+        usSectionRemain = usNumByteToWrite;    //不大于4096个字节
+    }
+
+    for ( ;; )
+    {
+        MX25Lxx_Read( ucBuf, ulSectionLocation * 4096, 4096 ); //读出整个扇区的内容
+
+        for ( i = 0; i < usSectionRemain; i++ ) //校验数据
+        {
+            if ( ucBuf[usSectionOffset + i] != 0XFF )
+            {
+                break;    //需要擦除
+            }
+        }
+
+        if ( i < usSectionRemain ) //需要擦除
+        {
+            MX25Lxx_EraseSector( ulSectionLocation ); //擦除这个扇区
+
+			MX25Lxx_Read( ucBuf, ulSectionLocation * 4096, 4096 ); //读出(测试用，完后删除)
+			for(i = 0; i < 4096; i++)
+			{
+				ucBuf[i] = 0xFF;
+			}
+			
+            for ( i = 0; i < usSectionRemain; i++ )	 //复制
+            {
+                ucBuf[i + usSectionOffset] = pucBuffer[i];
+            }
+
+            MX25Lxx_WriteNoCheck( ucBuf, ulSectionLocation * 4096, 4096 ); //写入整个扇区
+        }
+        else
+        {
+            MX25Lxx_WriteNoCheck( pucBuffer, ulWriteAddr, usSectionRemain );  //写已经擦除了的,直接写入扇区剩余区间.
+        }
+
+        if ( usNumByteToWrite == usSectionRemain )
+        {
+            break;    //写入结束了
+        }
+        else//写入未结束
+        {
+            ulSectionLocation++;//扇区地址增1
+            usSectionOffset = 0; //偏移位置为0
+            pucBuffer += usSectionRemain; //指针偏移
+            ulWriteAddr += usSectionRemain; //写地址偏移
+            usNumByteToWrite -= usSectionRemain;				//字节数递减
+
+            if ( usNumByteToWrite > 4096 )
+            {
+                usSectionRemain = 4096;    //下一个扇区还是写不完
+            }
+            else
+            {
+                usSectionRemain = usNumByteToWrite;    //下一个扇区可以写完了
+            }
+        }
+    }
+}
+
+
+/*******************************************************
+    @brief  :擦除整个芯片
+    @note   :
+    @param  :
+    @param  :
+    @param  :
+    @retval :
+*******************************************************/
+static void MX25Lxx_EraseChip( void )
+{
+	uint32_t ulInstructionMode;
+
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+	} 
+    
+	MX25Lxx_WriteEnable();
+	
+	if ( MX25Lxx_ReadyToWrite() )
+	{
+		QSPI_Send_CMD( 
+						CHIP_ERASE_CMD,				//要发送的指令
+						0, 							//发送到的目的地址
+						0, 							//空指令周期数
+						ulInstructionMode, 			//指令模式
+						QSPI_ADDRESS_NONE, 			//地址模式
+						QSPI_ADDRESS_8_BITS, 		//地址长度
+						QSPI_DATA_NONE 				//数据模式	
+					);
+		while ( MX25Lxx_WriteComplete() );		//等待写入结束	
+	}  
+}
+
+/*******************************************************
+    @brief  :擦除一个扇区
+    @note   :
+    @param  :ulDst_Addr:扇区地址 根据实际容量设置
+    @param  :
+    @param  :
+    @retval :
+*******************************************************/
+static void MX25Lxx_EraseSector( uint32_t ulDstAddr )
+{    
+	uint32_t ulInstructionMode, ulAddressMode, ulDataMode, ulCommond;
+	ulDstAddr *= 4096;	//传进为扇区地址,因此恢复为普通地址
+	
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+		ulAddressMode     = QSPI_ADDRESS_4_LINES;
+		ulCommond		  = SECTOR_ERASE_4K_ADDR_CMD;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+		ulAddressMode     = QSPI_ADDRESS_1_LINE;
+		ulCommond		  = SECTOR_ERASE_CMD;		
+	}
+    
+	MX25Lxx_WriteEnable();
+	
+	if ( MX25Lxx_ReadyToWrite() )
+	{
+		QSPI_Send_CMD( 
+						ulCommond,					//要发送的指令
+						ulDstAddr, 					//发送到的目的地址
+						0, 							//空指令周期数
+						ulInstructionMode, 			//指令模式
+						ulAddressMode, 				//地址模式
+						QSPI_ADDRESS_32_BITS, 		//地址长度
+						QSPI_DATA_NONE 				//数据模式	
+					);
+		while ( MX25Lxx_WriteComplete() );		//等待写入结束
+	}
+}
+
+/*******************************************************
+  * @brief  : 
+  * @note   : 
+  * @param  : 
+  * @param  : 
+  * @param  : 
+  * @retval : 
+*******************************************************/
+static void MX25Lxx_SoftwareReset( void )
+{ 
+	uint32_t ulInstructionMode, ulDataMode;
+
+	if(MX25Lxx_QSPI_MODE)   // Work In QUAD Model
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_4_LINES;
+		ulDataMode        = QSPI_DATA_4_LINES;
+	}
+	else
+	{
+		ulInstructionMode = QSPI_INSTRUCTION_1_LINE;
+		ulDataMode        = QSPI_DATA_1_LINE;  
+	} 
+    	
+	QSPI_Send_CMD( 
+					RESET_ENABLE_CMD, 			//要发送的指令
+					0, 							//发送到的目的地址
+					0, 							//空指令周期数
+					ulInstructionMode, 			//指令模式
+					QSPI_ADDRESS_NONE, 			//地址模式
+					QSPI_ADDRESS_8_BITS, 		//地址长度
+					ulDataMode 					//数据模式 
+				);
+	QSPI_Send_CMD( 
+					RESET_MEMORY_CMD, 			//要发送的指令
+					0, 							//发送到的目的地址
+					0, 							//空指令周期数
+					ulInstructionMode, 			//指令模式
+					QSPI_ADDRESS_NONE, 			//地址模式
+					QSPI_ADDRESS_8_BITS, 		//地址长度
+					ulDataMode 					//数据模式 
+				);
+}
+//------------------------------------------------------------------------

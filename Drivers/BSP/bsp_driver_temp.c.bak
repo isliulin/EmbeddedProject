@@ -1,0 +1,266 @@
+/**
+  ******************************************************************************
+  * @file       :
+  * @author     :
+  * @version    :
+  * @date       :
+  * @brief      : 
+  ******************************************************************************
+    @history
+
+  ******************************************************************************
+*/
+
+#include "include.h"
+
+/** 
+ * @brief : 
+ * @note  :
+ * @param : 
+ * @param : 
+ * @param : 
+ * @return:
+ */
+void BSP_TEMP_Init(void)
+{
+    //DS18B20_Init();
+    while(DS18B20_Init())
+}
+
+
+int16_t tempGetTemperature_1(void)
+{
+    unsigned char TemperatureL, TemperatureH;
+    unsigned short  Temperature;
+    unsigned char TempX_TAB[16] = {0x00, 0x01, 0x01, 0x02, 0x03, 0x03, 0x04, 0x04, 0x05, 0x06, 0x06, 0x07, 0x08, 0x08, 0x09, 0x09};
+/*
+    DS18B20_Rst();
+    DS18B20_WriteByte(SkipROM);
+    DS18B20_WriteByte(ReadScratchpad);
+    TemperatureL = DS18B20_ReadByte();
+    TemperatureH = DS18B20_ReadByte();
+    DS18B20_Rst();*/
+
+
+    DS18B20_StartConvert();           //开始转换
+
+    DS18B20_ReadScratchpad();
+
+    TemperatureL = DS18B20_ReadByte();
+    TemperatureH = DS18B20_ReadByte();
+
+    if(TemperatureH & 0x80)
+    {
+        TemperatureH = (~TemperatureH) | 0x08;
+        TemperatureL = ~TemperatureL + 1;
+        if(TemperatureL == 0)
+        {
+            TemperatureH += 1;
+        }
+    }
+
+    TemperatureH = (TemperatureH << 4) + ((TemperatureL & 0xf0) >> 4);
+    TemperatureL = TempX_TAB[TemperatureL & 0x0f];
+
+    //bit0-bit7为小数位，bit8-bit14为整数位，bit15为正负位 
+    Temperature = TemperatureH;
+    Temperature = (Temperature << 8) | TemperatureL;
+
+    //返回值为 0x1504 那么温度即 21.4。 0x15=16+5=21  0x04=4    21.4 ℃
+
+
+    return  Temperature;
+    //返回16位数据  bit0-bit7为小数位，bit8-bit14为整数位，bit15为正负位
+}
+
+/** 
+ * @brief : 在跳过匹配 ROM 情况下获取 DS18B20 温度值
+ * @note  :温度 = 符号位 + 整数 + 小数*0.0625  温度是16 位的带符号扩展的二进制补码形式 当工作在12位分辨率时，其中5个符号位，7个整数位，4个小数位
+ * @param : 
+ * @param : 
+ * @param : 
+ * @return:
+ */
+float tempGetTemperatureSkipRom(void)
+{
+    uint8_t ucTempHigh, ucTempLow;
+    int16_t sTemperature;
+    float fTemp;
+
+    DS18B20_StartConvert();           //开始转换
+
+    DS18B20_ReadScratchpad();
+
+    ucTempLow = DS18B20_ReadByte();
+    ucTempHigh = DS18B20_ReadByte();
+
+    sTemperature = ucTempHigh << 8;
+    sTemperature = sTemperature | ucTempLow;
+ 
+    if(sTemperature < 0)                // 负温度
+    {
+        fTemp = (~sTemperature + 1) * 0.0625;
+    }
+    else
+    {
+        fTemp = sTemperature * 0.0625;
+    }
+
+    return fTemp;
+}
+
+/** 
+ * @brief : 在匹配 ROM 情况下获取 DS18B20 温度值
+ * @note  :
+ * @param : ds18b20_id：存放 DS18B20 序列号的数组的首地址
+ * @param : 
+ * @param : 
+ * @return:
+ */
+float tempGetTemperatureMatchRom(uint8_t *pucId)
+{
+    uint8_t ucTempHigh, ucTempLow, i;
+    int16_t sTemperature;
+    float fTemp;
+
+    DS18B20_MatchRom();            //匹配ROM
+
+    for(i = 0; i < 8; i++)
+    {
+        DS18B20_WriteByte(pucId[i]);
+    }
+
+    DS18B20_WriteByte(0X44);                                /* 开始转换 */
+
+    DS18B20_MatchRom();            //匹配ROM
+
+    for(i = 0; i < 8; i++)
+    {
+        DS18B20_WriteByte(pucId[i]);
+    }
+
+    DS18B20_WriteByte(0XBE);                                /* 读温度值 */
+
+    ucTempLow = DS18B20_ReadByte();
+    ucTempHigh = DS18B20_ReadByte();
+
+    sTemperature = ucTempHigh << 8;
+    sTemperature = sTemperature | ucTempLow;
+
+    if(sTemperature < 0)                /* 负温度 */
+    {
+        fTemp = (~sTemperature + 1) * 0.0625;
+    }
+    else
+    {
+        fTemp = sTemperature * 0.0625;
+    }
+    
+    return fTemp;
+}
+
+/**
+ * @brief :从ds18b20得到温度值
+ * @note  :精度：0.1C  当工作在12位分辨率时，其中5个符号位，7个整数位，4个小数位 温度 = 符号位 + 整数 + 小数*0.0625
+ * @param :
+ * @param :
+ * @param :
+ * @return:返回值：温度值 （-550~1250）
+ */
+float tempGetTemperature_f(void)
+{
+    uint8_t ucTmp;
+    uint8_t ucTempLow, ucTempHigh;
+    int16_t sTemperature;
+    float fTemp;
+
+    DS18B20_StartConvert();           //开始转换 \
+
+    DS18B20_ReadScratchpad();
+
+    ucTempLow = DS18B20_ReadByte();     // LSB   
+    ucTempHigh = DS18B20_ReadByte();     // MSB   
+    if(ucTempHigh > 7)
+    {
+        ucTempHigh = ~ucTempHigh;
+        ucTempLow = ~ucTempLow;
+        ucTmp = 0;//温度为负  
+    }
+    else
+    {
+        ucTmp = 1;//温度为正
+    }
+    sTemperature = ucTempHigh; //获得高八位
+    sTemperature <<= 8;
+    sTemperature += ucTempLow;//获得底八位
+    fTemp = (float)sTemperature * 0.625;//转换     
+
+    if(ucTmp)
+    {
+        return fTemp;//返回温度值
+    }
+    else
+    {
+        return -fTemp;
+    }
+}
+
+int16_t tempGetTemperature_s(void)
+{
+    uint8_t ucTmp;
+    uint8_t ucTempLow, ucTempHigh;
+    int16_t sTemperature;
+    int16_t sTemp;
+
+    DS18B20_StartConvert();           //开始转换 \
+
+    DS18B20_ReadScratchpad();
+
+    ucTempLow = DS18B20_ReadByte();     // LSB   
+    ucTempHigh = DS18B20_ReadByte();     // MSB   
+    if(ucTempHigh > 7)
+    {
+        ucTempHigh = ~ucTempHigh;
+        ucTempLow = ~ucTempLow;
+        ucTmp = 0;//温度为负  
+    }
+    else
+    {
+        ucTmp = 1;//温度为正
+    }
+    sTemperature = ucTempHigh; //获得高八位
+    sTemperature <<= 8;
+    sTemperature += ucTempLow;//获得底八位
+    sTemp = (double)sTemperature * 0.625;//转换     
+
+    if(ucTmp)
+    {
+        return sTemp;//返回温度值
+    }
+    else
+    {
+        return -sTemp;
+    }
+}
+
+float tempGetTemperature(void)
+{
+    float fTemp;
+    int16_t sTemp;
+    float fT1, fT2;
+
+    //fTemp = tempGetTemperatureSkipRom();
+    //fTemp = tempGetTemperature_1();
+    fTemp = tempGetTemperature_f();
+    g_fTemperature = fTemp;
+
+    sTemp = tempGetTemperature_s();
+
+    fT1 = sTemp / 10;
+    fT2 = sTemp % 10;
+
+    Delay_ms(500);
+    return fTemp;
+}
+
+//-----------------------------------------------------

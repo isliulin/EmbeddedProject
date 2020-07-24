@@ -1,0 +1,289 @@
+/**
+  ******************************************************************************
+    @file
+    @author
+    @version
+    @date
+    @brief
+  ******************************************************************************
+    @history
+
+  ******************************************************************************
+*/
+
+#include "include.h"
+
+
+
+
+/*******************************************************
+  * @brief  :
+  * @note   :
+  * @param  :usMainFrequency 主频
+  * @param  :ucFrequencyRatio 频比
+  * @param  :usLowFrequencyNumber 低频供电周期数
+  * @return :
+*******************************************************/
+void FDIP_Init(uint16_t usMainFrequency, uint8_t ucFrequencyRatio, uint16_t usSendCycleNumber)
+{
+    uint8_t ucaWriteBuf[4];
+    uint32_t ulHighFreHalfPeriodCountValue;      //高频半周期计数值
+    uint32_t ulLowFreHalfPeriodCountValue;       //低频半周期计数值
+    uint32_t ulHalfPeriodCountAdjustValue;       //半周期计数校正值
+    uint32_t ulHighFreSendHalfPeriodValue;       //高频发射半周期数
+    uint32_t ulLowFreSendHalfPeriodValue;        //低频发射半周期数
+
+    BSP_FPGA_Init();
+
+    /*传给FPGA的计数值*/
+    double dCount;
+    dCount = ((double)ulFpgaCountFrequency / usMainFrequency) / 2;
+    ulHighFreHalfPeriodCountValue = (uint32_t)dCount;         //高频半周期计数值
+    ulHalfPeriodCountAdjustValue = usMainFrequency * 2;       //半周期计数校正值
+
+    if(g_ucFrequencyRatio == 0)//单频
+    {
+        fpgaWriteByte(FPGA_WORK_MODE_REG, FDIP_SINGLE_FREQUENCY);    //工作模式
+        ulHighFreSendHalfPeriodValue = usSendCycleNumber * 2;//高频发射半周期数
+    }
+    else//双频
+    {
+        fpgaWriteByte(FPGA_WORK_MODE_REG, FDIP_DOUBLE_FREQUENCY);
+        dCount = (double)usMainFrequency / ucFrequencyRatio;
+        dCount = ((double)ulFpgaCountFrequency / dCount) / 2;
+        ulLowFreHalfPeriodCountValue = (uint32_t)dCount;          //低频半周期计数值
+        ulLowFreSendHalfPeriodValue = usSendCycleNumber * 2;         //低频发射半周期数
+        ulHighFreSendHalfPeriodValue = ulLowFreSendHalfPeriodValue * ucFrequencyRatio;//高频发射半周期数
+
+        //低频半周期计数值
+        ucaWriteBuf[0] = ulLowFreHalfPeriodCountValue >> 24;
+        ucaWriteBuf[1] = ulLowFreHalfPeriodCountValue >> 16;
+        ucaWriteBuf[2] = ulLowFreHalfPeriodCountValue >> 8;
+        ucaWriteBuf[3] = ulLowFreHalfPeriodCountValue;
+        fpgaWriteBuffer(LOW_FREQUENCY_HALF_PERIOD_COUNT_1ST_BYTE_REG, ucaWriteBuf, 4);	//低频半周期计数值
+        /*fpgaWriteByte(LOW_FREQUENCY_HALF_PERIOD_COUNT_1ST_BYTE_REG, ulLowFreHalfPeriodCountValue >> 24);
+        fpgaWriteByte(LOW_FREQUENCY_HALF_PERIOD_COUNT_2ND_BYTE_REG, ulLowFreHalfPeriodCountValue >> 16);
+        fpgaWriteByte(LOW_FREQUENCY_HALF_PERIOD_COUNT_3RD_BYTE_REG, ulLowFreHalfPeriodCountValue >> 8);
+        fpgaWriteByte(LOW_FREQUENCY_HALF_PERIOD_COUNT_4TH_BYTE_REG, ulLowFreHalfPeriodCountValue);*/
+
+        //半周期计数校正值
+        ucaWriteBuf[0] = ulHalfPeriodCountAdjustValue >> 8;
+        ucaWriteBuf[1] = ulHalfPeriodCountAdjustValue;
+        fpgaWriteBuffer(LOW_FREQUENCY_ADJUST_HALF_PERIOD_MSB_REG, ucaWriteBuf, 2);	//低频校正半周期计数值
+        /*fpgaWriteByte(LOW_FREQUENCY_ADJUST_HALF_PERIOD_MSB_REG, ulHalfPeriodCountAdjustValue >> 8);
+        fpgaWriteByte(LOW_FREQUENCY_ADJUST_HALF_PERIOD_LSB_REG, ulHalfPeriodCountAdjustValue);*/
+
+        //低频发射半周期数
+        ucaWriteBuf[0] = ulLowFreSendHalfPeriodValue >> 8;
+        ucaWriteBuf[1] = ulLowFreSendHalfPeriodValue;
+        fpgaWriteBuffer(LOW_FREQUENCY_SEND_HALF_PERIOD_MSB_REG, ucaWriteBuf, 2);	//低频发射半周期计数值
+        /*fpgaWriteByte(LOW_FREQUENCY_SEND_HALF_PERIOD_MSB_REG, ulLowFreSendHalfPeriodValue >> 8);
+        fpgaWriteByte(LOW_FREQUENCY_SEND_HALF_PERIOD_MSB_REG, ulLowFreSendHalfPeriodValue);*/
+    }
+
+    //高频半周期计数值
+    ucaWriteBuf[0] = ulHighFreHalfPeriodCountValue >> 24;
+    ucaWriteBuf[1] = ulHighFreHalfPeriodCountValue >> 16;
+    ucaWriteBuf[2] = ulHighFreHalfPeriodCountValue >> 8;
+    ucaWriteBuf[3] = ulHighFreHalfPeriodCountValue;
+    fpgaWriteBuffer(HIGH_FREQUENCY_HALF_PERIOD_COUNT_1ST_BYTE_REG, ucaWriteBuf, 4);	//高频半周期计数值
+    /*fpgaWriteByte(HIGH_FREQUENCY_HALF_PERIOD_COUNT_1ST_BYTE_REG, ulHighFreHalfPeriodCountValue >> 24);
+    fpgaWriteByte(HIGH_FREQUENCY_HALF_PERIOD_COUNT_2ND_BYTE_REG, ulHighFreHalfPeriodCountValue >> 16);
+    fpgaWriteByte(HIGH_FREQUENCY_HALF_PERIOD_COUNT_3RD_BYTE_REG, ulHighFreHalfPeriodCountValue >> 8);
+    fpgaWriteByte(HIGH_FREQUENCY_HALF_PERIOD_COUNT_4TH_BYTE_REG, ulHighFreHalfPeriodCountValue);*/
+
+    //半周期计数校正值
+    ucaWriteBuf[0] = ulHalfPeriodCountAdjustValue >> 8;
+    ucaWriteBuf[1] = ulHalfPeriodCountAdjustValue;
+    fpgaWriteBuffer(HIGH_FREQUENCY_ADJUST_HALF_PERIOD_MSB_REG, ucaWriteBuf, 2);	//高频校正半周期计数值
+    /*fpgaWriteByte(HIGH_FREQUENCY_ADJUST_HALF_PERIOD_MSB_REG, ulHalfPeriodCountAdjustValue >> 8);
+    fpgaWriteByte(HIGH_FREQUENCY_ADJUST_HALF_PERIOD_LSB_REG, ulHalfPeriodCountAdjustValue);*/
+
+    //高频发射半周期数
+    ucaWriteBuf[0] = ulHighFreSendHalfPeriodValue >> 8;
+    ucaWriteBuf[1] = ulHighFreSendHalfPeriodValue;
+    fpgaWriteBuffer(HIGH_FREQUENCY_SEND_HALF_PERIOD_MSB_REG, ucaWriteBuf, 2);	//高频发射半周期计数值
+    /*fpgaWriteByte(HIGH_FREQUENCY_SEND_HALF_PERIOD_MSB_REG, ulHighFreSendHalfPeriodValue >> 8);
+    fpgaWriteByte(HIGH_FREQUENCY_SEND_HALF_PERIOD_LSB_REG, ulHighFreSendHalfPeriodValue);*/
+
+
+    /*-------------------------------------*/
+
+    //设置AD采样速率
+    //fpgaWriteByte(FPGA_AD_CONFIG_CMD_REG, 0x53);           //ADS1255配置命令WREG,Write to REG 3
+    //fpgaWriteByte(FPGA_AD_CONFIG_DATA_REG, 0xA1);          //ADS1255配置数据,A/D Data Rate 1000SPS
+    //fpgaWriteByte(FPGA_AD_CONFIG_DATA_REG, 0x92);          //ADS1255配置数据,A/D Data Rate 500SPS
+
+    fpgaWriteByte(FPGA_AD_CMD_REG, AD_CMD_ENABLE);         //AD命令使能
+    Delay_ms(2);
+    fpgaWriteByte(FPGA_AD_CMD_REG, AD_CMD_DISABLE);        //AD命令禁止
+
+    //AD自校
+    fpgaWriteByte(FPGA_AD_CONFIG_CMD_REG, 0xF0);           //ADS1255配置命令SELFCAL,Offset and Gain Self-Calibration
+    fpgaWriteByte(FPGA_AD_CMD_REG, AD_CMD_ENABLE);         //AD命令使能
+    Delay_ms(2);
+    fpgaWriteByte(FPGA_AD_CMD_REG, AD_CMD_DISABLE);        //AD命令禁止
+
+    fpgaWriteByte(FPGA_AD_INPUT_SELECT_REG, CURRENT_CHANNEL);    //ADS1255输入选择,电流通道
+
+    fpgaWriteByte(FPGA_CURRENT_GAIN_REG, 0x00);//电流增益1倍
+
+    //AD中断使能 GPS中断使能 过流中断使能 过压中断使能 电压数据更新中断使能 发射停止中断使能 GPS_PPS连续64秒锁定温补晶振计数有效中断使能 过温中断使能
+    fpgaWriteByte(FPGA_INT_CTRL_REG, AD_INT_ENABLE | GPS_INT_ENABLE | OVERCURRENT_INT_ENABLE | OVERVOLTAGE_INT_ENABLE | VOLTAGE_VALUE_INT_ENABLE | SEND_STOP_INT_ENABLE | TXCO_64S_LOCK_INT_ENABLE | OTP_INT_ENABLE);
+/*
+    fpgaWriteByte(FPGA_INT_CTRL_REG, AD_INT_ENABLE);               //AD中断使能
+    fpgaWriteByte(FPGA_INT_CTRL_REG, GPS_INT_ENABLE);              //GPS中断使能
+    fpgaWriteByte(FPGA_INT_CTRL_REG, OVERCURRENT_INT_ENABLE);      //过流中断使能
+    fpgaWriteByte(FPGA_INT_CTRL_REG, OVERVOLTAGE_INT_ENABLE);      //过压中断使能
+    fpgaWriteByte(FPGA_INT_CTRL_REG, VOLTAGE_VALUE_INT_ENABLE);    //电压数据更新中断使能
+    fpgaWriteByte(FPGA_INT_CTRL_REG, SEND_STOP_INT_ENABLE);        //发射停止中断使能
+    fpgaWriteByte(FPGA_INT_CTRL_REG, TXCO_64S_LOCK_INT_ENABLE);    //GPS_PPS连续64秒锁定温补晶振计数有效中断使能
+    fpgaWriteByte(FPGA_INT_CTRL_REG, OTP_INT_ENABLE);              //过温中断使能
+*/
+
+
+    //HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);  //开 PA8：FPGA_PPS_PIN中断
+    //HAL_NVIC_EnableIRQ(EXTI1_IRQn);    //开 PA1，GPS_PPS_PIN中断    
+}
+
+/*******************************************************
+  * @brief  :
+  * @note   :频组数+频比+低频供电周期数(两个字节)+频组发射间隔+循环次数+主频1+主频2+...主频N
+  * @param  :
+  * @param  :
+  * @param  :
+  * @return :
+*******************************************************/
+void vFdipStartTask(void *pvParameters)
+{
+    uint32_t ulDelayTime;
+    float fTempVal;
+    uint8_t ucNumberOfCycles = 0, ucConut = 0;
+    TickType_t xLastWakeTime;
+
+    xLastWakeTime = xTaskGetTickCount();//获取当前tick
+    //(void)pvParameters;
+
+    for(;;)
+    {
+        if(g_usSendCycleNumber == 0)//发射周期数为0表示第一个频组无限循环
+        {
+            FDIP_Init(g_usaMainFrequency[0], g_ucFrequencyRatio, g_usSendCycleNumber);
+            SyncStart(g_ucWorkMode);
+            g_ucFrequencyGroupIndex++;
+            vTaskSuspend(xFdipStartTask_Handle);      //挂起vFdipStartTask
+            vTaskDelay(pdMS_TO_TICKS(20));
+            break;
+        }
+        else//发射周期数不为0
+        {
+            if(g_ucNumberOfCycles == 0)//循环次数为0时表示无限循环
+            {
+                for(;;)
+                {
+                    for(ucConut = 0; ucConut < g_ucFrequencyGroup; ucConut++)
+                    {
+                        FDIP_Init(g_usaMainFrequency[ucConut], g_ucFrequencyRatio, g_usSendCycleNumber);
+                        SyncStart(g_ucWorkMode);
+
+                        g_ucFrequencyGroupIndex++;
+                        g_ucSendStopFlag = 0;
+
+                        if(g_ucWorkMode == FDIP_SINGLE_FREQUENCY)//单频
+                        {
+                            fTempVal = (float)1 / g_usaMainFrequency[ucConut];//高频周期
+                        }
+                        else if(g_ucWorkMode == FDIP_DOUBLE_FREQUENCY)//双频
+                        {
+                            g_fLowFrequency = (float)g_usaMainFrequency[ucConut] / g_ucFrequencyRatio; //低频频率
+                            fTempVal = (float)1 / g_fLowFrequency;//低频周期
+                        }
+
+                        g_fFrequencyGroupTime = fTempVal * g_usSendCycleNumber;
+                        ulDelayTime = (uint32_t)fTempVal;
+
+                        xSemaphoreTake(xWaveStartSemaphore_Handle, portMAX_DELAY);//vGpsMsgReceiveCallback释放,波形正式开始
+
+                        //vTaskDelay(pdMS_TO_TICKS(1000));//每次启动后都要等下一个PPS来才真正开始发射
+                        vTaskDelay(pdMS_TO_TICKS(g_fFrequencyGroupTime * 1000));//一个频组需要的时间
+                        //vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(fTempVal * 1000 + 1000));
+
+                        //xSemaphoreTake(xSendStopFlagSemaphore_Handle, portMAX_DELAY);//vReadSendStopFlagTask释放,发射周期结束
+                        xSemaphoreGive(xFdipSaveSemaphore_Handle);//在vSaveDataTask接收
+
+                        SyncStop();//一个频组完
+
+                        g_ucDeviceStatusFirstByte = NEGATIVE_STOP_SUPPLY;
+
+                        g_ucFrequencyGroupCycleFlag = 0;
+                        xSemaphoreTake(xFrequencyGroupCycleSemaphore_Handle, portMAX_DELAY);//vGpsMsgReceiveCallback释放
+                    }
+                    ucConut = 0;
+                    g_ucFrequencyGroupIndex = 0;
+                }
+            }
+            else//循环次数不为0
+            {
+                for(ucNumberOfCycles = 0; ucNumberOfCycles < g_ucNumberOfCycles; ucNumberOfCycles++)
+                {
+                    for(ucConut = 0; ucConut < g_ucFrequencyGroup; ucConut++)
+                    {
+                        FDIP_Init(g_usaMainFrequency[ucConut], g_ucFrequencyRatio, g_usSendCycleNumber);
+                        SyncStart(g_ucWorkMode);
+
+                        g_ucFrequencyGroupIndex++;
+                        g_ucSendStopFlag = 0;
+
+                        if(g_ucWorkMode == FDIP_SINGLE_FREQUENCY)//单频
+                        {
+                            fTempVal = (float)1 / g_usaMainFrequency[ucConut];//高频周期
+                        }
+                        else if(g_ucWorkMode == FDIP_DOUBLE_FREQUENCY)//双频
+                        {
+                            g_fLowFrequency = (float)g_usaMainFrequency[ucConut] / g_ucFrequencyRatio; //低频频率
+                            fTempVal = (float)1 / g_fLowFrequency;//低频周期
+                        }
+
+                        g_fFrequencyGroupTime = fTempVal * g_usSendCycleNumber;
+                        ulDelayTime = (uint32_t)g_fFrequencyGroupTime;
+
+                        xSemaphoreTake(xWaveStartSemaphore_Handle, portMAX_DELAY);//vGpsMsgReceiveCallback释放,波形正式开始
+
+                        //vTaskDelay(pdMS_TO_TICKS(1000));//每次启动后都要等下一个PPS来才真正开始发射
+                        vTaskDelay(pdMS_TO_TICKS(g_fFrequencyGroupTime * 1000));//一个频组需要的时间
+                        //vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(fTempVal * 1000 + 1000));
+
+                        //xSemaphoreTake(xSendStopFlagSemaphore_Handle, portMAX_DELAY);//vReadSendStopFlagTask释放,发射周期结束
+                        xSemaphoreGive(xFdipSaveSemaphore_Handle);//在vSaveDataTask接收
+
+                        SyncStop();//一个频组完
+
+                        g_ucDeviceStatusFirstByte = NEGATIVE_STOP_SUPPLY;
+
+                        g_ucFrequencyGroupCycleFlag = 0;
+                        xSemaphoreTake(xFrequencyGroupCycleSemaphore_Handle, portMAX_DELAY);//vGpsMsgReceiveCallback释放
+                    }
+                    ucConut = 0;
+                    g_ucFrequencyGroupIndex = 0;
+                }
+                //StopSend();
+                break;
+            }//循环次数不为0
+        } //发射周期数不为0       
+    } //for(;;)  
+    if(g_usSendCycleNumber != 0) // 发射周期数不为0
+    {
+        StopSend();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+//----------------------------------------------------------------------------------------

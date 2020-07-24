@@ -1,0 +1,402 @@
+/**
+  ******************************************************************************
+  * @file		storage.c
+  * @author
+  * @version
+  * @date
+  * @brief
+  ******************************************************************************
+  * @history
+
+  ******************************************************************************
+  */
+
+#include "include.h"
+
+char g_caSDPath[4]; /* SD logical drive path */
+FATFS tSDFatFS;     /* File system object for SD logical drive */
+FIL tWorkFile;
+DIR tTDIPDir;
+DIR tFDIPDir;
+WriteToSDTypeDef_T tWriteToSD;
+SDInfo_T tSDInfo;
+
+/*******************************************************
+  * @brief  : Storage drives initialization
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @retval :
+*******************************************************/
+uint8_t BSP_FATFS_Init(void)
+{
+	char caFoldPath[20] = {0};
+	uint8_t ucStatus = 0;
+	FRESULT eResult;
+
+	//Link the USB Host disk I/O driver
+	FATFS_LinkDriver(&tSD_Driver, g_caSDPath);
+
+	if(f_mount(&tSDFatFS, (char const *)g_caSDPath, 1) == FR_OK)
+	{
+		strcpy(caFoldPath, g_caSDPath);
+		strcat(caFoldPath, g_caTDIPFolder);
+		eResult = f_mkdir(caFoldPath); //创建文件夹 0:/TDIP_MODE
+		if((eResult == FR_OK) || (eResult == FR_EXIST))
+		{
+			ucStatus = 1;
+		}
+		else
+		{
+			ucStatus = 0;
+			SDError();
+			Error_Handler();
+		}
+
+		strcpy(caFoldPath, g_caSDPath);
+		strcat(caFoldPath, g_caFDIPFolder);
+		eResult = f_mkdir(caFoldPath); //创建文件夹 0:/FDIP
+		if((eResult == FR_OK) || (eResult == FR_EXIST))
+		{
+			ucStatus = 2;
+		}
+		else
+		{
+			ucStatus = 0;
+			SDError();
+			Error_Handler();
+		}
+	}
+	else
+	{
+		ucStatus = 0;
+		SDError();
+		Error_Handler();
+	}
+	return ucStatus;
+}
+
+/*******************************************************
+  * @brief  :
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @retval :
+*******************************************************/
+void SDError(void)
+{
+	uint8_t ucaSendBuf[1], ucDataLength;
+
+	ENUM_ID_NO_TypeDef ucSendID;
+	ucaSendBuf[0] = SD_ERROR;
+	ucDataLength = 1;
+	ucSendID = g_ucClientID;
+	TransmitList(REC_ERROR_FLAG, ucaSendBuf, ucDataLength, g_ucClientID); //发送SD卡错误到移动客户端
+}
+
+
+/*******************************************************
+  * @brief  : Gets Time from RTC
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @retval : Time in DWORD
+*******************************************************/
+DWORD get_fattime(void)
+{
+	uint32_t time = 0;
+
+	rtcGetCalendar();
+/*
+    time = ((ptGPSMsg->tUtc.ucYear + 2000) - 1980) << 25; //年份
+    time |= (ptGPSMsg->tUtc.ucMonth) << 21;               //月份
+    time |= (ptGPSMsg->tUtc.ucDate) << 16;                //日期
+    time |= (ptGPSMsg->tUtc.ucHour) << 11;               //时
+    time |= (ptGPSMsg->tUtc.ucMinute) << 5;              //分
+    time |= (ptGPSMsg->tUtc.ucSecond / 2);               //秒
+*/
+	time = ((tDateStructureget.Year + 2000) - 1980) << 25; //年份
+	time |= (tDateStructureget.Month) << 21;               //月份
+	time |= (tDateStructureget.Date) << 16;                //日期
+	time |= (tTimeStructureget.Hours) << 11;               //时
+	time |= (tTimeStructureget.Minutes) << 5;              //分
+	time |= (tTimeStructureget.Seconds / 2);               //秒
+	return time;
+}
+
+/*******************************************************
+  * @brief  :
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @retval :
+*******************************************************/
+SDInfo_T sdGetSDInfo(void)
+{
+	uint32_t ulFreeClust;
+	float fTotalSize = 0;
+	float fFreeSize = 0;
+	uint8_t ucaBuf[20];
+	FATFS *pfs;
+	FRESULT eResult;
+	//SDInfo_T tSDInfo;
+
+    xSemaphoreTake(xFatfsMscSemaphore_Handle, portMAX_DELAY); //获取信号量，在操作完USB后释放
+    HAL_NVIC_DisableIRQ(OTG_FS_IRQn);
+
+	eResult = f_getfree((TCHAR const *)g_caSDPath, &ulFreeClust, &pfs);
+	if(eResult == FR_OK)
+	{
+		fTotalSize = (pfs->n_fatent - 2) * pfs->csize / 2; //总容量 单位KB
+		fTotalSize = fTotalSize / 1024;                    //MB
+		fTotalSize = fTotalSize / 1024;                    //GB
+
+		fFreeSize = ulFreeClust * pfs->csize / 2; // 可用容量 单位KB
+		fFreeSize = fFreeSize / 1024;             //MB
+		fFreeSize = fFreeSize / 1024;             //GB
+
+		#ifdef DEBUG_TARGET
+		//SEGGER_RTT_SetTerminal(2);
+		//SEGGER_RTT_printf(0, "SD total capacity:%.2fGB%f\r\n", fTotalSize);
+		//App_Printf("SD total capacity:%.2fGB\r\n", fTotalSize);
+
+		//SEGGER_RTT_printf(0, "SD remain capacity:%.2fGB%f\r\n", fFreeSize);
+		//App_Printf("SD remain capacity:%.2fGB\r\n", fFreeSize);
+		#endif
+
+		tSDInfo.fTotalCapacity = fTotalSize;
+		tSDInfo.fFreeCapacity = fFreeSize;
+	}
+	else
+	{
+		SDError();
+		Error_Handler();
+	}
+
+    xSemaphoreGive(xFatfsMscSemaphore_Handle); //释放信号量，在需要操作USB的地方获取
+    HAL_NVIC_EnableIRQ(OTG_FS_IRQn);
+
+	return tSDInfo;
+}
+
+/*******************************************************
+  * @brief  :
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @retval :
+*******************************************************/
+void vWriteToSDTask(void *pvParameters)
+{
+	uint32_t ulBytesWritten, ulWriteNum;
+	FRESULT eResult;
+	WriteToSDTypeDef_T tReceiveSDQueue;
+	
+	//(void)pvParameters;
+	configASSERT(pvParameters == NULL);//在此处这里不能去省，去掉后启动发射后会进入HardFault_Handler,原因未知
+   			
+	for(;;)
+	{
+		xQueueReceive(xWriteToSDQueue_Handle, tReceiveSDQueue.caContent, portMAX_DELAY); //接收队列，队列是要写入SD的数据，在AnalysisHandle函数启动发射时先把参数写入，后面读取FPGA里的数据写入
+		
+		if(g_ucSaveMode == FULL_WAVEFORM_STORAGE)//全波形存储
+		{
+			ulWriteNum = 1024;
+		}
+		if(g_ucSaveMode == CYCLIC_STORAGE)//周期存储
+		{
+			ulWriteNum = 10;
+		}
+			
+		eResult = f_write(&tWorkFile, tReceiveSDQueue.caContent, ulWriteNum, (uint32_t *)&ulBytesWritten);
+		f_sync(&tWorkFile);        
+		//vTaskDelay(pdMS_TO_TICKS(5));
+	}
+}
+
+/*******************************************************
+  * @brief  :
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @retval :
+*******************************************************/
+uint8_t fatfsReadFileList(DIR *ptDir, char *pcFileName, uint16_t *pusCount)
+{
+	FRESULT eResult;
+	FILINFO tFileInfo = {0};
+	char *pcName = NULL;
+	uint8_t ucStatus = 1;
+	uint16_t usCountPoint;
+	usCountPoint = *pusCount;
+	char *pcFileExtension = NULL;
+
+	eResult = f_readdir(ptDir, &tFileInfo);
+	if(eResult != FR_OK || tFileInfo.fname[0] == 0) //读目录不成功或是尾
+	{
+		ucStatus = 0;
+		return ucStatus;
+	}
+
+	if(tFileInfo.fattrib & AM_DIR) //是目录就结束
+	{
+		ucStatus = 0;
+		return ucStatus;
+	}
+
+    SeparateFileName(tFileInfo.fname, pcName, pcFileExtension);    //分离文件名，并把扩展名变成小写
+
+    if(strcmp(pcFileExtension, "dat"))
+    {
+        strcpy(pcFileName, tFileInfo.fname);//这里需要连扩展名在内的整个文件名
+
+        ++(usCountPoint);
+    }
+	//if (strstr(pcName, ".dat"))
+	//{
+		//strcpy(pcFileName, tFileInfo.fname);
+//
+		//++(usCountPoint);
+	//}
+	*pusCount = usCountPoint;
+	return ucStatus;
+}
+
+
+/*******************************************************
+  * @brief  :
+  * @note   :
+  * @param  :
+  * @param  :
+  * @param  :
+  * @retval :
+*******************************************************/
+void StrToLower(char *pcStr)
+{
+	while(*pcStr != '\0')
+	{
+		if(*pcStr > 'A' && *pcStr <= 'Z')
+		{
+			*pcStr += 32;
+		}
+		pcStr++;
+	}
+}
+
+/*******************************************************
+  * @brief  : 分离文件名称
+  * @note   : 给任一文件名称(诸如abc.txt)，把其文件名和扩展名分离
+  * @param  : pcSrcFile：输入文件名(abc.txt)
+  * @param  : pcDestName：保存文件名(如abc)
+  * @param  : pcFileExtension：保存文件扩展名(如txt)
+  * @retval : TRUE:成功；FALSE:失败
+*******************************************************/
+uint8_t SeparateFileName(const char *pcSrcFile, char *pcDestName, char *pcFileExtension)
+{
+	char *pcExt = NULL;
+	char cFile[30] = {'\0'};
+	if(NULL != pcSrcFile)
+	{
+		strcpy(cFile, pcSrcFile);
+
+		//查找文件名与扩展名分隔符'.'
+		pcExt = strrchr(cFile, '.');
+		if(NULL == pcExt)
+		{
+			return (FALSE);
+		}
+
+		//获取扩展名
+		pcFileExtension = pcExt + 1;
+		StrToLower(pcFileExtension);
+
+		//获取文件名
+		memset(pcExt, 0, strlen(pcExt));
+		strcpy(pcDestName, cFile);
+
+		return (TRUE);
+	}
+
+	return (FALSE);
+}
+
+/*====================================================================================================
+//函 数 名 : f_deldir
+//函数功能 : 移除一个文件夹，包括其本身和其子文件夹，子文件
+//输    入 : const TCHAR *path---指向要移除的空结尾字符串对象的指针
+//输    出 : 无
+//返 回 值 : FR_OK(0)：           函数成功
+//           FR_NO_FILE：         无法找到文件或目录
+//           FR_NO_PATH：         无法找到路径
+//           FR_INVALID_NAME：    文件名非法
+//           FR_INVALID_DRIVE：   驱动器号非法
+//           FR_DENIED：          函数由于以下原因被拒绝：
+//               对象属性为只读；
+//               目录下非空；
+//               当前目录。
+//           FR_NOT_READY：       磁盘驱动器无法工作，由于驱动器中没有媒体或其他原因
+//           FR_WRITE_PROTECTED： 媒体写保护
+//           FR_DISK_ERR：        函数失败由于磁盘运行的一个错误
+//           FR_INT_ERR：         函数失败由于一个错误的 FAT 结构或内部错误
+//           FR_NOT_ENABLED：     逻辑驱动器没有工作区
+//           FR_NO_FILESYSTEM：   驱动器上没有合法的 FAT 卷
+//           FR_LOCKED：          函数被拒由于文件共享机制（_FS_SHARE）
+//备    注 : f_deldir 函数用来移除一个文件夹及其子文件夹、子文件，但不能移除已经打开的对象。
+*/
+FRESULT fatfsDelDir(DIR tDir, char *pcPath)
+{
+	FRESULT eResult;
+	FILINFO tFileInfo = {0};
+	TCHAR cFile[48] = {0};
+
+	eResult = f_opendir(&tDir, pcPath);	//打开文件夹
+    if(eResult != FR_OK)
+    {
+        SDError();
+		f_closedir(&tDir);
+		return FALSE;
+    }
+
+	//持续读取文件夹内容
+	while((eResult == FR_OK) && (FR_OK == f_readdir(&tDir, &tFileInfo)))
+	{
+		//若是"."或".."文件夹，跳过
+		if(0 == tFileInfo.fname[0])					break;      //若读到的文件名为空
+		if(0 == strcmp(tFileInfo.fname, "."))		continue;   //若读到的文件名为当前文件夹
+		if(0 == strcmp(tFileInfo.fname, ".."))		continue;   //若读到的文件名为上一级文件夹
+
+		memset(cFile, 0, sizeof(cFile));
+
+		sprintf((char *)cFile, "%s/%s", pcPath, tFileInfo.fname);		
+
+		if(tFileInfo.fattrib & AM_DIR)
+		{
+			eResult = fatfsDelDir(tDir, cFile);	//若是文件夹，递归删除
+		}
+		else
+		{
+			eResult = f_unlink(cFile);	//若是文件，直接删除
+		}
+	}
+	
+	f_closedir(&tDir);
+
+	/*
+		//删除本身
+		if(eResult == FR_OK)
+		{
+			eResult = f_unlink(pcPath);
+		}
+	*/
+
+
+	return eResult;
+}
+
+//--------------------------------------------------
